@@ -25,8 +25,8 @@ After 2 years, I finally got some time to refine this project.
 This time I spent more than 2 weeks try to make the control silky smooth,  bug
 free and accurate under origianl 120x120 pixel tile but with pixel level accuracy.
 
-The highlight of this refinement project is pixel level contrl accuracy under large 120x120 tile
-Under 120 x 120 large tile, If you want easy programming,
+The highlight of this refinement project is pixel level contrl accuracy under large 120x120 tile.
+Under this kindo of  large tile, If you want easy programming,
  then give up control accuracy. If you want both of them,
 then you have to do a lot of math. To get 120x120 pixel large tile
 with pixel level accurate control, I developed "normal moving", 
@@ -53,7 +53,7 @@ And every character class has an instance of this WalkingEngine(or Advance Walki
 the robot has installed the programmed legs.
 
 The mouse control is implement as single click walk, holding without moving mouse walk, holding
-with moving mouse walk, and shift click walk (player can walk all pre-defined the route by shift-clicking)
+with moving mouse walk, and shift click walk (player can walk all pre-defined the routes by shift-clicking)
 
 I made the Camera class and installed it in every character class like each robot installed
 a pair of eyes. So theoretically we can use any character as the main character just focus her/his camera.
@@ -70,10 +70,10 @@ each character's fight for route positions or yield route if he/she loses the po
 the only route is occupied by others. And I also inplement switch animation and sound effect to make the switch more fun.
 
 The other improvement is I rewrite the Map system, now the map system is
-stored as a undirected graph, the adding map node is very easy at the initial time.
+stored as a undirected graph, now the adding map node is very easy at the initial time.
 After initialization the map with necessary data information, the map node will
 automatically incorporate with the whole map graph. And it automatically carries
-the auto map switch function, map background music switch, foot step sound effeect switch.
+the auto map switch, map background music switch, foot step sound effeect switch functions.
 The character class sotre's the shoe type and link the map node to make the same shoe has
 different foot step sound due to the ground material changed as map change.
 And there is a map node path finding function with DFS in Undirected graph algorithm.
@@ -84,6 +84,7 @@ provide basic background music, sound effect and 3D positional sound. The foot s
 positional sound and you can hear and feel the character moves with sound changes.
 
 The fourth improvement is modularize the timer as class with standard c time library.
+I don't use Microsfot more precisce time library, becasue standard C time library is fair enough.
 Now the animation class, walkingengine, FPS calculation, text display, notice display etc
 all has animation effect function now can incorporate this timer class.
 
