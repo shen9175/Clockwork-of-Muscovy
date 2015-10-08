@@ -19,7 +19,7 @@ and map switch mechanism. But we have only 2-3 days to implement with 2D graphic
 But we want add something more. we want to remake large campus map but manually
 type in the collision data is too time consuming and we only have two days before
 deadline. So we  chose to use large tile size to reduce the collision data input time.
-But it came out that it was the wrost decision ever. Make the control very inaccurate and blunt.
+But it came out that it was the worst decision ever. Make the control very inaccurate and blunt.
 
 After 2 years, I finally got some time to refine this project.
 This time I spent more than 2 weeks try to make the control silky smooth,  bug
