@@ -698,9 +698,7 @@ LRESULT Core::OnMouseWheel(WPARAM wParam, LPARAM lParam) {
 			} else {
 				--I3DL2;
 			}
-			XAUDIO2FX_REVERB_PARAMETERS reverbParameters;
-			ReverbConvertI3DL2ToNative(&I3DL2_Reverb[(I3DL2 % 30 + 30) % 30], &reverbParameters);//(I3DL2 % 30 + 30) % 30 positive modulo
-			pSubmixVoice->SetEffectParameters(0, &reverbParameters, sizeof(reverbParameters));
+			sprites[0]->getCurrentMap()->getBGM()->SetEffectParameters(I3DL2);
 			return 0;
 	}
 	BGMVolDispTimer.Reset();

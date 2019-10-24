@@ -132,148 +132,174 @@ bool Sound::LoadFile(std::string szFile, char* &wfx) {
 }
 
 
-Sound::Sound(IXAudio2* pXAudio2, std::string filename){
+Sound::Sound(int sound_api, std::string filename){
 	LoadFile(filename, wfx);
-	buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
-	buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
+	if (sound_api == 1) {
+		common_init();
+		buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
+		buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
 
 
-	if (FAILED(hr = pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<const WAVEFORMATEX*>(wfx), 0, XAUDIO2_DEFAULT_FREQ_RATIO, nullptr, nullptr, nullptr))) {
-		MessageBox(nullptr, "Creating SourceVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-		return;
+		if (FAILED(hr = pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<const WAVEFORMATEX*>(wfx), 0, XAUDIO2_DEFAULT_FREQ_RATIO, nullptr, nullptr, nullptr))) {
+			MessageBox(nullptr, "Creating SourceVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+			return;
+		}
+		if (FAILED(hr = pSourceVoice->SubmitSourceBuffer(&buffer))) {
+			MessageBox(nullptr, "Submiting SourceBuffer Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+			return;
+		}
+	} else if (sound_api == 2) {
+		;
 	}
-	if (FAILED(hr = pSourceVoice->SubmitSourceBuffer(&buffer))) {
-		MessageBox(nullptr, "Submiting SourceBuffer Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-		return;
-	}
+
 }
 
-Sound::Sound(IXAudio2* pXAudio2, std::string filename, int loop) {
+Sound::Sound(int sound_api, std::string filename, int loop) {
 	LoadFile(filename, wfx);
-	buffer.LoopCount = loop;
-	buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
+
+	if (sound_api == 1){
+		common_init();
+		buffer.LoopCount = loop;
+		buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
 
 
-	if (FAILED(hr = pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<const WAVEFORMATEX*>(wfx), 0, XAUDIO2_DEFAULT_FREQ_RATIO, nullptr, nullptr, nullptr))) {
-		MessageBox(nullptr, "Creating SourceVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-		return;
+		if (FAILED(hr = pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<const WAVEFORMATEX*>(wfx), 0, XAUDIO2_DEFAULT_FREQ_RATIO, nullptr, nullptr, nullptr))) {
+			MessageBox(nullptr, "Creating SourceVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+			return;
+		}
+		if (FAILED(hr = pSourceVoice->SubmitSourceBuffer(&buffer))) {
+			MessageBox(nullptr, "Submiting SourceBuffer Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+			return;
+		}
+	} else if (sound_api == 2) {
+		;
 	}
-	if (FAILED(hr = pSourceVoice->SubmitSourceBuffer(&buffer))) {
-		MessageBox(nullptr, "Submiting SourceBuffer Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-		return;
-	}
+
 }
 
-Sound::Sound(IXAudio2* pXAudio2, std::string filename, int loop, IXAudio2MasteringVoice* pmaster, IXAudio2SubmixVoice* pSubmix) : pMasterVoice(pmaster) , pSubmixVoice(pSubmix) {
+Sound::Sound(int sound_api, std::string filename, int loop, int I3DL2=2) {
+	if (sound_api == 1) {
+		common_init();
 
-	initial3DSoundCone();
-	initial3D_LFE_Curve();
-	initial3D_Reverb_Curve();
-	DWORD ChannelMask;
+
+
+		XAUDIO2FX_REVERB_PARAMETERS reverbParameters;
+		ReverbConvertI3DL2ToNative(&I3DL2_Reverb[I3DL2], &reverbParameters);
+		pSubmixVoice->SetEffectParameters(0, &reverbParameters, sizeof(reverbParameters));
+
+
+		initial3DSoundCone();
+		initial3D_LFE_Curve();
+		initial3D_Reverb_Curve();
+		DWORD ChannelMask;
 #if (_WIN32_WINNT >= 0x0602 /*_WIN32_WINNT_WIN8*/)
 
-	pMasterVoice->GetVoiceDetails(&MasterVoiceDetails);
-	if (MasterVoiceDetails.InputChannels > 8) {
-		MessageBox(nullptr, "Input Channel more than 8!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-	}
-	if (FAILED(hr = pMasterVoice->GetChannelMask(&ChannelMask))) {
-		MessageBox(nullptr, "Getting Channel Mask Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-	}
+		pMasterVoice->GetVoiceDetails(&MasterVoiceDetails);
+		if (MasterVoiceDetails.InputChannels > 8) {
+			MessageBox(nullptr, "Input Channel more than 8!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+		}
+		if (FAILED(hr = pMasterVoice->GetChannelMask(&ChannelMask))) {
+			MessageBox(nullptr, "Getting Channel Mask Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+		}
 
 #else
-if (FAILED(hr = pXAudio2->GetDeviceDetails(0,&DeviceDetails))) {
-		MessageBox(nullptr, "Getting Channel Mask Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-	}
-if (DeviceDetails.OutputFormat.Format.nChannels > 8) {
-	MessageBox(nullptr, "Input Channel more than 8!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-	}
-	ChannelMask = DeviceDetails.OutputFormat.dwChannelMask;
+		if (FAILED(hr = pXAudio2->GetDeviceDetails(0, &DeviceDetails))) {
+			MessageBox(nullptr, "Getting Channel Mask Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+		}
+		if (DeviceDetails.OutputFormat.Format.nChannels > 8) {
+			MessageBox(nullptr, "Input Channel more than 8!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+		}
+		ChannelMask = DeviceDetails.OutputFormat.dwChannelMask;
 #endif
 
 
-	X3DAudioInitialize(ChannelMask, X3DAUDIO_SPEED_OF_SOUND, X3DInstance);
+		X3DAudioInitialize(ChannelMask, X3DAUDIO_SPEED_OF_SOUND, X3DInstance);
 
-	UseRedirectToLFE = ((ChannelMask & SPEAKER_LOW_FREQUENCY) != 0); //Check if there is subwoofer setup
-	lisener = new X3DAUDIO_LISTENER;
-	lisener->Position.x = 0;
-	lisener->Position.y = 0;
-	lisener->Position.z = 0;
-	lisener->OrientFront.x = 0;
-	lisener->OrientFront.y = -1.0f;
-	lisener->OrientFront.z = -1.0f;
-	lisener->OrientTop.x = 0.0f;
-	lisener->OrientTop.y = -1.0f;
-	lisener->OrientTop.z = 1.0f;
-	lisener->pCone = Listener_DirectionalCone;
+		UseRedirectToLFE = ((ChannelMask & SPEAKER_LOW_FREQUENCY) != 0); //Check if there is subwoofer setup
+		lisener = new X3DAUDIO_LISTENER;
+		lisener->Position.x = 0;
+		lisener->Position.y = 0;
+		lisener->Position.z = 0;
+		lisener->OrientFront.x = 0;
+		lisener->OrientFront.y = -1.0f;
+		lisener->OrientFront.z = -1.0f;
+		lisener->OrientTop.x = 0.0f;
+		lisener->OrientTop.y = -1.0f;
+		lisener->OrientTop.z = 1.0f;
+		lisener->pCone = Listener_DirectionalCone;
 
-	emitter = new X3DAUDIO_EMITTER;
-	emitter->pCone = emitterCone;
-	emitter->OrientFront.x = 1.0f;
-	emitter->OrientFront.y = 0.0f;
-	emitter->OrientFront.z = 0.0f;
+		emitter = new X3DAUDIO_EMITTER;
+		emitter->pCone = emitterCone;
+		emitter->OrientFront.x = 1.0f;
+		emitter->OrientFront.y = 0.0f;
+		emitter->OrientFront.z = 0.0f;
 
-	emitter->OrientTop.x = 0.0f;
-	emitter->OrientTop.y = 0.0f;
-	emitter->OrientTop.z = 1.0f;
+		emitter->OrientTop.x = 0.0f;
+		emitter->OrientTop.y = 0.0f;
+		emitter->OrientTop.z = 1.0f;
 
-	emitter->ChannelCount = INPUTCHANNELS;// 1
-	emitter->ChannelRadius = 1.0f;
+		emitter->ChannelCount = INPUTCHANNELS;// 1
+		emitter->ChannelRadius = 1.0f;
 
-	emitterAzimuths = new float[INPUTCHANNELS];
-	emitter->pChannelAzimuths = emitterAzimuths;//?
+		emitterAzimuths = new float[INPUTCHANNELS];
+		emitter->pChannelAzimuths = emitterAzimuths;//?
 
-	emitter->InnerRadius = 100.0f;
-	emitter->InnerRadiusAngle = X3DAUDIO_PI / 4.0f;
-	emitter->pVolumeCurve = nullptr;//const_cast<X3DAUDIO_DISTANCE_CURVE*>(&X3DAudioDefault_LinearCurve);
-	emitter->pLFECurve = Emitter_LFE_Curve;
-	emitter->pLPFDirectCurve = nullptr; //use default curve
-	emitter->pLPFReverbCurve = nullptr; //use default curve
-	emitter->pReverbCurve = Emitter_Reverb_Curve;
-	emitter->CurveDistanceScaler = 100.0f;
-	emitter->DopplerScaler = 1.0f;
+		emitter->InnerRadius = 100.0f;
+		emitter->InnerRadiusAngle = X3DAUDIO_PI / 4.0f;
+		emitter->pVolumeCurve = nullptr;//const_cast<X3DAUDIO_DISTANCE_CURVE*>(&X3DAudioDefault_LinearCurve);
+		emitter->pLFECurve = Emitter_LFE_Curve;
+		emitter->pLPFDirectCurve = nullptr; //use default curve
+		emitter->pLPFReverbCurve = nullptr; //use default curve
+		emitter->pReverbCurve = Emitter_Reverb_Curve;
+		emitter->CurveDistanceScaler = 100.0f;
+		emitter->DopplerScaler = 1.0f;
 
-	dsp_setting = new X3DAUDIO_DSP_SETTINGS;
-	dsp_setting->SrcChannelCount = INPUTCHANNELS;
+		dsp_setting = new X3DAUDIO_DSP_SETTINGS;
+		dsp_setting->SrcChannelCount = INPUTCHANNELS;
 
 #if (_WIN32_WINNT >= 0x0602 /*_WIN32_WINNT_WIN8*/)
-	dsp_setting->DstChannelCount = MasterVoiceDetails.InputChannels;
+		dsp_setting->DstChannelCount = MasterVoiceDetails.InputChannels;
 #else
-	dsp_setting->DstChannelCount = DeviceDetails.OutputFormat.Format.nChannels;
+		dsp_setting->DstChannelCount = DeviceDetails.OutputFormat.Format.nChannels;
 #endif
 
-	matrixCoefficients = new float[INPUTCHANNELS * OUTPUTCHANNELS];
-	dsp_setting->pMatrixCoefficients = matrixCoefficients;
+		matrixCoefficients = new float[INPUTCHANNELS * OUTPUTCHANNELS];
+		dsp_setting->pMatrixCoefficients = matrixCoefficients;
 
-	LoadFile(filename, wfx);
-	buffer.LoopCount = loop;
-	buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
+		LoadFile(filename, wfx);
+		buffer.LoopCount = loop;
+		buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
 
-	//Create two sound filter pathes:
-	//One is for LPF direct path
-	//One is for LPF reverb path
+		//Create two sound filter pathes:
+		//One is for LPF direct path
+		//One is for LPF reverb path
 
-	//LFE: Low Frequency Effect -- always omnidirectional.
-	//LPF: Low Pass Filter, divided into two classifications:
-	//Direct -- Applied to the direct signal path, used for obstruction/occlusion effects.
-	//Reverb -- Applied to the reverb signal path, used for occlusion effects only.
+		//LFE: Low Frequency Effect -- always omnidirectional.
+		//LPF: Low Pass Filter, divided into two classifications:
+		//Direct -- Applied to the direct signal path, used for obstruction/occlusion effects.
+		//Reverb -- Applied to the reverb signal path, used for occlusion effects only.
 
-	XAUDIO2_SEND_DESCRIPTOR sendDescriptor[2];
-	sendDescriptor[0].Flags = XAUDIO2_SEND_USEFILTER;
-	sendDescriptor[0].pOutputVoice = pMasterVoice;
-	sendDescriptor[1].Flags = XAUDIO2_SEND_USEFILTER;
-	sendDescriptor[1].pOutputVoice = pSubmixVoice;
-	XAUDIO2_VOICE_SENDS sendlist;
-	sendlist.SendCount = 2;
-	sendlist.pSends = sendDescriptor;
+		XAUDIO2_SEND_DESCRIPTOR sendDescriptor[2];
+		sendDescriptor[0].Flags = XAUDIO2_SEND_USEFILTER;
+		sendDescriptor[0].pOutputVoice = pMasterVoice;
+		sendDescriptor[1].Flags = XAUDIO2_SEND_USEFILTER;
+		sendDescriptor[1].pOutputVoice = pSubmixVoice;
+		XAUDIO2_VOICE_SENDS sendlist;
+		sendlist.SendCount = 2;
+		sendlist.pSends = sendDescriptor;
 
-	if (FAILED(hr = pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<const WAVEFORMATEX*>(wfx), 0, XAUDIO2_DEFAULT_FREQ_RATIO, nullptr, &sendlist, nullptr))) {
-		MessageBox(nullptr, "Creating SourceVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-		return;
+		if (FAILED(hr = pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<const WAVEFORMATEX*>(wfx), 0, XAUDIO2_DEFAULT_FREQ_RATIO, nullptr, &sendlist, nullptr))) {
+			MessageBox(nullptr, "Creating SourceVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+			return;
+		}
+		if (FAILED(hr = pSourceVoice->SubmitSourceBuffer(&buffer))) {
+			MessageBox(nullptr, "Submiting SourceBuffer Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+			return;
+		}
+	} else if (sound_api == 2) {
+		;
 	}
-	if (FAILED(hr = pSourceVoice->SubmitSourceBuffer(&buffer))) {
-		MessageBox(nullptr, "Submiting SourceBuffer Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-		return;
-	}
+
 
 }
 
@@ -293,6 +319,75 @@ Sound::~Sound() {
 		buffer.pAudioData = nullptr;
 	}
 	X3Dcleanup();
+	if (pMasterVoice) {
+		pMasterVoice->DestroyVoice();
+	}
+	if (pSubmixVoice) {
+		pSubmixVoice->DestroyVoice();
+	}
+	pXAudio2->Release();
+	CoUninitialize();
+}
+
+
+void Sound::common_init() {
+
+	CoInitializeEx(nullptr, 0);
+
+	if (FAILED(hr = XAudio2Create(&pXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR))) {
+		MessageBox(nullptr, "Creating XAudio2 Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+#if (_WIN32_WINNT >= 0x0602 /*_WIN32_WINNT_WIN8*/)
+	if (FAILED(hr = pXAudio2->CreateMasteringVoice(&pMasterVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr))) {
+		MessageBox(nullptr, "Creating MasteringVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+	XAUDIO2_VOICE_DETAILS MasterVoiceDetails;
+
+	pMasterVoice->GetVoiceDetails(&MasterVoiceDetails);
+	if (MasterVoiceDetails.InputChannels > 8) {
+		MessageBox(nullptr, "Input Channel more than 8!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+
+#else
+	if (FAILED(hr = pXAudio2->CreateMasteringVoice(&pMasterVoice)/*, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, 0, nullptr)*/)) {
+		char buffer[256];
+		sprintf_s(buffer, "Creating MasteringVoice Failed! %x, %d", hr, hr);
+		MessageBox(nullptr, buffer, "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+	XAUDIO2_DEVICE_DETAILS DeviceDetails;
+	if (FAILED(hr = pXAudio2->GetDeviceDetails(0, &DeviceDetails))) {
+		MessageBox(nullptr, "Getting Channel Mask Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+#endif
+	IUnknown* pXAPO;
+	if (FAILED(hr = XAudio2CreateReverb(&pXAPO))) {
+		MessageBox(nullptr, "Create Reverb Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+		return;
+	}
+	XAUDIO2_EFFECT_DESCRIPTOR descriptor;
+	descriptor.InitialState = true;
+	descriptor.OutputChannels = 1;
+	descriptor.pEffect = pXAPO;
+	XAUDIO2_EFFECT_CHAIN chain;
+	chain.EffectCount = 1;
+	chain.pEffectDescriptors = &descriptor;
+#if (_WIN32_WINNT >= 0x0602 /*_WIN32_WINNT_WIN8*/)
+	if (FAILED(hr = pXAudio2->CreateSubmixVoice(&pSubmixVoice, 1, MasterVoiceDetails.InputSampleRate, 0, 0, nullptr, &chain))) {
+		MessageBox(nullptr, "Creating SubmixVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+#else
+	if (FAILED(hr = pXAudio2->CreateSubmixVoice(&pSubmixVoice, 1, DeviceDetails.OutputFormat.Format.nSamplesPerSec, 0, 0, nullptr, &chain))) {
+		MessageBox(nullptr, "Creating SubmixVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+#endif
+	pXAPO->Release();
+}
+
+
+void Sound::SetEffectParameters(int I3DL2) {
+	XAUDIO2FX_REVERB_PARAMETERS reverbParameters;
+	ReverbConvertI3DL2ToNative(&I3DL2_Reverb[(I3DL2 % 30 + 30) % 30], &reverbParameters);//(I3DL2 % 30 + 30) % 30 positive modulo
+	pSubmixVoice->SetEffectParameters(0, &reverbParameters, sizeof(reverbParameters));
 }
 void Sound::X3DPositionalSoundCalculation(float listenerX, float lisenerY, float listenerZ, float emitterX, float emitterY, float emitterZ, float elaspedtime) {
 

@@ -3,7 +3,8 @@
 
 #define ResX 1024 //game screen width is 1024 pixel
 #define ResY 600 //game screen height is 600 pixel
-
+#define XAUDIO2_API 1
+#define OPENAL_API 2
 #define ATTACKBUTTON 1001
 #define ITEMLISTBOX 1002
 #define MOVEBUTTON  1003
@@ -16,7 +17,7 @@
 
 class NoticeQueue {
 public:
-	NoticeQueue(IXAudio2* paudio) { p = new Sound(paudio, ".//Sound//Effects//notice.wav", 0); noticeTimer.Reset(); bShowing = false; }
+	NoticeQueue(int sound_api) { p = new Sound(sound_api, ".//Sound//Effects//notice.wav", 0); noticeTimer.Reset(); bShowing = false; }
 	~NoticeQueue() { delete p; }
 	double getElapsedTime() {return noticeTimer.ElapsedTime();}
 	void resetTimer() { noticeTimer.Reset(); }

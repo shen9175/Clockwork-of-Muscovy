@@ -24,9 +24,7 @@ private:
 	Explore* pExplore;
 	Graphic* pGraphic;
 	MapGraph* pMapGraph;
-	IXAudio2* pXAudio2;
-	IXAudio2MasteringVoice* pMasterVoice;
-	IXAudio2SubmixVoice* pSubmixVoice;
+	int sound_api;
 	Sound* pButtonOpen;
 	Sound* pButtonClose;
 	Sound* pDoor;
@@ -89,73 +87,7 @@ private:
 
 	HBITMAP mouse_ripple[1][3];
 	
-	XAUDIO2FX_REVERB_I3DL2_PARAMETERS I3DL2_Reverb[30] =
-	{
-		XAUDIO2FX_I3DL2_PRESET_DEFAULT,
-		XAUDIO2FX_I3DL2_PRESET_GENERIC,
-		XAUDIO2FX_I3DL2_PRESET_FOREST,
-		XAUDIO2FX_I3DL2_PRESET_PADDEDCELL,
-		XAUDIO2FX_I3DL2_PRESET_ROOM,
-		XAUDIO2FX_I3DL2_PRESET_BATHROOM,
-		XAUDIO2FX_I3DL2_PRESET_LIVINGROOM,
-		XAUDIO2FX_I3DL2_PRESET_STONEROOM,
-		XAUDIO2FX_I3DL2_PRESET_AUDITORIUM,
-		XAUDIO2FX_I3DL2_PRESET_CONCERTHALL,
-		XAUDIO2FX_I3DL2_PRESET_CAVE,
-		XAUDIO2FX_I3DL2_PRESET_ARENA,
-		XAUDIO2FX_I3DL2_PRESET_HANGAR,
-		XAUDIO2FX_I3DL2_PRESET_CARPETEDHALLWAY,
-		XAUDIO2FX_I3DL2_PRESET_HALLWAY,
-		XAUDIO2FX_I3DL2_PRESET_STONECORRIDOR,
-		XAUDIO2FX_I3DL2_PRESET_ALLEY,
-		XAUDIO2FX_I3DL2_PRESET_CITY,
-		XAUDIO2FX_I3DL2_PRESET_MOUNTAINS,
-		XAUDIO2FX_I3DL2_PRESET_QUARRY,
-		XAUDIO2FX_I3DL2_PRESET_PLAIN,
-		XAUDIO2FX_I3DL2_PRESET_PARKINGLOT,
-		XAUDIO2FX_I3DL2_PRESET_SEWERPIPE,
-		XAUDIO2FX_I3DL2_PRESET_UNDERWATER,
-		XAUDIO2FX_I3DL2_PRESET_SMALLROOM,
-		XAUDIO2FX_I3DL2_PRESET_MEDIUMROOM,
-		XAUDIO2FX_I3DL2_PRESET_LARGEROOM,
-		XAUDIO2FX_I3DL2_PRESET_MEDIUMHALL,
-		XAUDIO2FX_I3DL2_PRESET_LARGEHALL,
-		XAUDIO2FX_I3DL2_PRESET_PLATE,
-	};
 
-	const char* I3DL2_Name[ 30 ] =
-	{
-		"Default",
-		"Generic",
-		"Forest",
-		"Padded cell",
-		"Room",
-		"Bathroom",
-		"Living room",
-		"Stone room",
-		"Auditorium",
-		"Concert hall",
-		"Cave",
-		"Arena",
-		"Hangar",
-		"Carpeted hallway",
-		"Hallway",
-		"Stone Corridor",
-		"Alley",
-		"City",
-		"Mountains",
-		"Quarry",
-		"Plain",
-		"Parking lot",
-		"Sewer pipe",
-		"Underwater",
-		"Small room",
-		"Medium room",
-		"Large room",
-		"Medium hall",
-		"Large hall",
-		"Plate",
-	};
 
 	//========main.cpp shared global variables definitions start==============//
 	HWND  hwnd; // main window handle

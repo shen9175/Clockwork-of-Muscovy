@@ -23,7 +23,7 @@
 using namespace std;
 
 
-Map::Map(int ID, string NAME, int tile, int steps, int w, int h, string filepath, IXAudio2* pXAudio2, string bgm, unordered_map<string, Sound*>* shoeSoundpair, float& gVolume) : mapID(ID) ,name(NAME), tile_size(tile), step(steps), width(w), height(h), mapfile_path(filepath), BGM(new Sound(pXAudio2,bgm)), shoeSound(shoeSoundpair), volume(gVolume) {
+Map::Map(int ID, string NAME, int tile, int steps, int w, int h, string filepath, int sound_api, string bgm, unordered_map<string, Sound*>* shoeSoundpair, float& gVolume) : mapID(ID) ,name(NAME), tile_size(tile), step(steps), width(w), height(h), mapfile_path(filepath), BGM(new Sound(sound_api,bgm)), shoeSound(shoeSoundpair), volume(gVolume) {
 	ifstream in_file;
 	string line;
 	in_file.open(mapfile_path.c_str());
@@ -112,7 +112,7 @@ MapGraph::~MapGraph() {
 
 bool MapGraph::AddMap(MAPSTRUCT map) {
 	if (MapCollections.find(map.NAME) == MapCollections.cend()) {
-		MapCollections[map.NAME] = new Map(map.ID, map.NAME, map.TILESIZE, map.STEP, map.WIDTH, map.HEIGHT, map.FILEPATH, map.pXaudio2, map.BGMPATH, map.shoeSound, map.volume);
+		MapCollections[map.NAME] = new Map(map.ID, map.NAME, map.TILESIZE, map.STEP, map.WIDTH, map.HEIGHT, map.FILEPATH, map.sound_api, map.BGMPATH, map.shoeSound, map.volume);
 		return true;
 	} else {
 		return false;
@@ -120,9 +120,9 @@ bool MapGraph::AddMap(MAPSTRUCT map) {
 }
 
 
-bool MapGraph::AddMap(int ID, string NAME, int TILESIZE, int STEP, int WIDTH, int HEIGHT, string filepath, IXAudio2* pXAudio2, string bgm, unordered_map<string, Sound*>* shoeSoundpair, float& volume) {
+bool MapGraph::AddMap(int ID, string NAME, int TILESIZE, int STEP, int WIDTH, int HEIGHT, string filepath, int sound_api, string bgm, unordered_map<string, Sound*>* shoeSoundpair, float& volume) {
 	if (MapCollections.find(NAME) == MapCollections.cend()) {
-		MapCollections[NAME] = new Map(ID, NAME, TILESIZE, STEP, WIDTH, HEIGHT, filepath, pXAudio2, bgm, shoeSoundpair, volume);
+		MapCollections[NAME] = new Map(ID, NAME, TILESIZE, STEP, WIDTH, HEIGHT, filepath, sound_api, bgm, shoeSoundpair, volume);
 		return true;
 	} else {
 		return false;

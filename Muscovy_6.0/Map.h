@@ -10,7 +10,7 @@ struct door {
 	RECT prevMap_exit_triger_Rect;
 	Map* nextMap;
 	Sound* doorsound;
-	door (int x, int y, int left, int top, int right, int bottom, IXAudio2* pxaudio, string filename/*Sound* sound*/) : nextMap_enter_position(x, y), prevMap_exit_triger_Rect{ left, top, right, bottom }, doorsound(new Sound(pxaudio, filename, 0)/*sound*/) {}
+	door (int x, int y, int left, int top, int right, int bottom, int sound_api, string filename/*Sound* sound*/) : nextMap_enter_position(x, y), prevMap_exit_triger_Rect{ left, top, right, bottom }, doorsound(new Sound(sound_api, filename, 0)/*sound*/) {}
 	door() { nextMap_enter_position = { 0,0 }, prevMap_exit_triger_Rect = { 0,0,0,0 }; nextMap = nullptr; doorsound = nullptr; } // unordered_map need default constructor for door
 	~door(){ delete doorsound; doorsound = nullptr;}
 };
@@ -22,11 +22,11 @@ struct MAPSTRUCT {
 	int WIDTH;
 	int HEIGHT;
 	string FILEPATH;
-	IXAudio2* pXaudio2;
+	int sound_api;
 	string BGMPATH;
 	unordered_map<string, Sound*>* shoeSound;
 	float& volume;
-	MAPSTRUCT(int id, string name, int tilesize, int step, int width, int height, string filepath, IXAudio2* pxaudio, string bgm, unordered_map<string, Sound*>* ShoeSoundpair, float& gvolume) : ID(id), NAME(name), TILESIZE(tilesize), STEP(step), WIDTH(width), HEIGHT(height), FILEPATH(filepath), pXaudio2(pxaudio), BGMPATH(bgm), shoeSound(ShoeSoundpair), volume(gvolume) {}
+	MAPSTRUCT(int id, string name, int tilesize, int step, int width, int height, string filepath, int sound_api, string bgm, unordered_map<string, Sound*>* ShoeSoundpair, float& gvolume) : ID(id), NAME(name), TILESIZE(tilesize), STEP(step), WIDTH(width), HEIGHT(height), FILEPATH(filepath), sound_api(sound_api), BGMPATH(bgm), shoeSound(ShoeSoundpair), volume(gvolume) {}
 };
 class Map {
 private:
@@ -44,7 +44,7 @@ private:
 	unordered_map<string, Sound*>* shoeSound;//ideally should each each ground material has a shoe-sound pair hashmap for each map and shoe but here we assume each map has the same ground material for simplicity.
 	//each player carries it's shoe parameter and call here to retrieve corresponding footstep sound effects.
 public:
-	Map(int ID, string NAME, int TILESIZE, int STEP, int WIDTH, int HEIGHT, string filepath, IXAudio2* pXAuodio2, string bgm, unordered_map<string, Sound*>* shoeSoundpair, float& gVolume);
+	Map(int ID, string NAME, int TILESIZE, int STEP, int WIDTH, int HEIGHT, string filepath, int sound_api, string bgm, unordered_map<string, Sound*>* shoeSoundpair, float& gVolume);
 	~Map();
 	Map* MapSwitch(int x, int y, Character* player);
 	void setTileSize(int size) { tile_size = size; }
@@ -81,7 +81,7 @@ public:
 	MapGraph(const vector<MAPSTRUCT> maps, const vector<pair<pair<string, door*>, pair<string, door*>>> doorpairs);
 	~MapGraph();
 	bool AddMap(MAPSTRUCT map);
-	bool AddMap(int ID, string NAME, int TILESIZE, int STEP, int WIDTH, int HEIGHT, string filepath,IXAudio2* pXaudio2, string bgm, unordered_map<string, Sound*>* shoeSoundpair, float& volume);
+	bool AddMap(int ID, string NAME, int TILESIZE, int STEP, int WIDTH, int HEIGHT, string filepath, int sound_api, string bgm, unordered_map<string, Sound*>* shoeSoundpair, float& volume);
 	bool PairDoors(string name1, door* door1, string name2, door* door2);
 	Map* getMap(string name);
 	vector<Map*> findMapNodePath(Map* current, Map* target);
