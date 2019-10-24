@@ -20,7 +20,7 @@ private:
 };
 class TeamPop {
 	public:
-		TeamPop(int sound_api, int &singlestate) : state(singlestate) { AniTimer.Reset(); firstime = true; counter = 10; soundfx = new Sound(sound_api, ".//Sound//Effects//spreading.wav", 0); }//initial is spread mode
+		TeamPop(SoundDevice* pSoundDevice, int &singlestate) : state(singlestate) { AniTimer.Reset(); firstime = true; counter = 10; soundfx = new Sound(pSoundDevice, ".//Sound//Effects//spreading.wav", 0); }//initial is spread mode
 		void TeamPoping(vector<Character*> sprites, bool toggle);
 	private:
 		int& state;

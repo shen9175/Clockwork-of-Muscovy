@@ -25,6 +25,7 @@ private:
 	Graphic* pGraphic;
 	MapGraph* pMapGraph;
 	int sound_api;
+	SoundDevice* pSoundDevice;
 	Sound* pButtonOpen;
 	Sound* pButtonClose;
 	Sound* pDoor;

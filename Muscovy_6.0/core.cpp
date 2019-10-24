@@ -736,9 +736,9 @@ void Core::initialGame() {
 	dialogue_initial(); 
 	antiAround = { false, 0 };
 	sound_api = XAUDIO2_API;
-
-	noticequeue = new NoticeQueue(sound_api);
-	teampop = new TeamPop(sound_api, singlestate);
+	pSoundDevice = new SoundDevice(sound_api);
+	noticequeue = new NoticeQueue(pSoundDevice);
+	teampop = new TeamPop(pSoundDevice, singlestate);
   string namepool[]={"Lewis K. Mack",
 		     "Julius Petrel Gilligan Jr.",
 		     "H. Drassilis Gerenraip",
@@ -1054,78 +1054,78 @@ void Core::initialGame() {
   //for readability, here use STL hashmap and STL string as the key, 
   //for real use or specific memory and speed demand, it could be changed to dynamic array using int as accessing key. And use all char* instead of STL string class
   unordered_map<string, Sound*>* main_map = new unordered_map<string, Sound*>({
-	  {"shoe1", new Sound(sound_api,".//Sound//Effects//shoe1_main.wav", 0, 2)},
-	  {"shoe2", new Sound(sound_api,".//Sound//Effects//shoe2_main.wav", 0, 2)},
-	  {"shoe3", new Sound(sound_api,".//Sound//Effects//shoe3_main.wav", 0, 2)},
-	  {"shoe4", new Sound(sound_api,".//Sound//Effects//shoe4_main.wav", 0, 2)},
-	  {"shoe5", new Sound(sound_api,".//Sound//Effects//shoe5_main.wav", 0, 2)},
-	  {"shoe6", new Sound(sound_api,".//Sound//Effects//shoe6_main.wav", 0, 2)},
-	  {"shoe7", new Sound(sound_api,".//Sound//Effects//shoe7_main.wav", 0, 2)},
-	  {"shoe8", new Sound(sound_api,".//Sound//Effects//shoe8_main.wav", 0, 2)} 
+	  {"shoe1", new Sound(pSoundDevice,".//Sound//Effects//shoe1_main.wav", 0, 2)},
+	  {"shoe2", new Sound(pSoundDevice,".//Sound//Effects//shoe2_main.wav", 0, 2)},
+	  {"shoe3", new Sound(pSoundDevice,".//Sound//Effects//shoe3_main.wav", 0, 2)},
+	  {"shoe4", new Sound(pSoundDevice,".//Sound//Effects//shoe4_main.wav", 0, 2)},
+	  {"shoe5", new Sound(pSoundDevice,".//Sound//Effects//shoe5_main.wav", 0, 2)},
+	  {"shoe6", new Sound(pSoundDevice,".//Sound//Effects//shoe6_main.wav", 0, 2)},
+	  {"shoe7", new Sound(pSoundDevice,".//Sound//Effects//shoe7_main.wav", 0, 2)},
+	  {"shoe8", new Sound(pSoundDevice,".//Sound//Effects//shoe8_main.wav", 0, 2)} 
   });
   unordered_map<string, Sound*>* jeb1 = new unordered_map<string, Sound*>({
-	  {"shoe1", new Sound(sound_api,".//Sound//Effects//shoe1_jeb1.wav", 0, 2)},
-	  {"shoe2", new Sound(sound_api,".//Sound//Effects//shoe2_jeb1.wav", 0, 2)},
-	  {"shoe3", new Sound(sound_api,".//Sound//Effects//shoe3_jeb1.wav", 0, 2)},
-	  {"shoe4", new Sound(sound_api,".//Sound//Effects//shoe4_jeb1.wav", 0, 2)},
-	  {"shoe5", new Sound(sound_api,".//Sound//Effects//shoe5_jeb1.wav", 0, 2)},
-	  {"shoe6", new Sound(sound_api,".//Sound//Effects//shoe6_jeb1.wav", 0, 2)},
-	  {"shoe7", new Sound(sound_api,".//Sound//Effects//shoe7_jeb1.wav", 0, 2)},
-	  {"shoe8", new Sound(sound_api,".//Sound//Effects//shoe8_jeb1.wav", 0, 2)} 
+	  {"shoe1", new Sound(pSoundDevice,".//Sound//Effects//shoe1_jeb1.wav", 0, 2)},
+	  {"shoe2", new Sound(pSoundDevice,".//Sound//Effects//shoe2_jeb1.wav", 0, 2)},
+	  {"shoe3", new Sound(pSoundDevice,".//Sound//Effects//shoe3_jeb1.wav", 0, 2)},
+	  {"shoe4", new Sound(pSoundDevice,".//Sound//Effects//shoe4_jeb1.wav", 0, 2)},
+	  {"shoe5", new Sound(pSoundDevice,".//Sound//Effects//shoe5_jeb1.wav", 0, 2)},
+	  {"shoe6", new Sound(pSoundDevice,".//Sound//Effects//shoe6_jeb1.wav", 0, 2)},
+	  {"shoe7", new Sound(pSoundDevice,".//Sound//Effects//shoe7_jeb1.wav", 0, 2)},
+	  {"shoe8", new Sound(pSoundDevice,".//Sound//Effects//shoe8_jeb1.wav", 0, 2)} 
   });
   unordered_map<string, Sound*>* jeb2 = new unordered_map<string, Sound*>({
-	  {"shoe1", new Sound(sound_api,".//Sound//Effects//shoe1_jeb2.wav", 0, 2)},
-	  {"shoe2", new Sound(sound_api,".//Sound//Effects//shoe2_jeb2.wav", 0, 2)},
-	  {"shoe3", new Sound(sound_api,".//Sound//Effects//shoe3_jeb2.wav", 0, 2)},
-	  {"shoe4", new Sound(sound_api,".//Sound//Effects//shoe4_jeb2.wav", 0, 2)},
-	  {"shoe5", new Sound(sound_api,".//Sound//Effects//shoe5_jeb2.wav", 0, 2)},
-	  {"shoe6", new Sound(sound_api,".//Sound//Effects//shoe6_jeb2.wav", 0, 2)},
-	  {"shoe7", new Sound(sound_api,".//Sound//Effects//shoe7_jeb2.wav", 0, 2)},
-	  {"shoe8", new Sound(sound_api,".//Sound//Effects//shoe8_jeb2.wav", 0, 2)} 
+	  {"shoe1", new Sound(pSoundDevice,".//Sound//Effects//shoe1_jeb2.wav", 0, 2)},
+	  {"shoe2", new Sound(pSoundDevice,".//Sound//Effects//shoe2_jeb2.wav", 0, 2)},
+	  {"shoe3", new Sound(pSoundDevice,".//Sound//Effects//shoe3_jeb2.wav", 0, 2)},
+	  {"shoe4", new Sound(pSoundDevice,".//Sound//Effects//shoe4_jeb2.wav", 0, 2)},
+	  {"shoe5", new Sound(pSoundDevice,".//Sound//Effects//shoe5_jeb2.wav", 0, 2)},
+	  {"shoe6", new Sound(pSoundDevice,".//Sound//Effects//shoe6_jeb2.wav", 0, 2)},
+	  {"shoe7", new Sound(pSoundDevice,".//Sound//Effects//shoe7_jeb2.wav", 0, 2)},
+	  {"shoe8", new Sound(pSoundDevice,".//Sound//Effects//shoe8_jeb2.wav", 0, 2)} 
   });
   unordered_map<string, Sound*>* jeb3 = new unordered_map<string, Sound*>({
-	  {"shoe1", new Sound(sound_api,".//Sound//Effects//shoe1_jeb3.wav", 0, 2)},
-	  {"shoe2", new Sound(sound_api,".//Sound//Effects//shoe2_jeb3.wav", 0, 2)},
-	  {"shoe3", new Sound(sound_api,".//Sound//Effects//shoe3_jeb3.wav", 0, 2)},
-	  {"shoe4", new Sound(sound_api,".//Sound//Effects//shoe4_jeb3.wav", 0, 2)},
-	  {"shoe5", new Sound(sound_api,".//Sound//Effects//shoe5_jeb3.wav", 0, 2)},
-	  {"shoe6", new Sound(sound_api,".//Sound//Effects//shoe6_jeb3.wav", 0, 2)},
-	  {"shoe7", new Sound(sound_api,".//Sound//Effects//shoe7_jeb3.wav", 0, 2)},
-	  {"shoe8", new Sound(sound_api,".//Sound//Effects//shoe8_jeb3.wav", 0, 2)} 
+	  {"shoe1", new Sound(pSoundDevice,".//Sound//Effects//shoe1_jeb3.wav", 0, 2)},
+	  {"shoe2", new Sound(pSoundDevice,".//Sound//Effects//shoe2_jeb3.wav", 0, 2)},
+	  {"shoe3", new Sound(pSoundDevice,".//Sound//Effects//shoe3_jeb3.wav", 0, 2)},
+	  {"shoe4", new Sound(pSoundDevice,".//Sound//Effects//shoe4_jeb3.wav", 0, 2)},
+	  {"shoe5", new Sound(pSoundDevice,".//Sound//Effects//shoe5_jeb3.wav", 0, 2)},
+	  {"shoe6", new Sound(pSoundDevice,".//Sound//Effects//shoe6_jeb3.wav", 0, 2)},
+	  {"shoe7", new Sound(pSoundDevice,".//Sound//Effects//shoe7_jeb3.wav", 0, 2)},
+	  {"shoe8", new Sound(pSoundDevice,".//Sound//Effects//shoe8_jeb3.wav", 0, 2)} 
   });
   unordered_map<string, Sound*>* commons = new unordered_map<string, Sound*>({
-	  {"shoe1", new Sound(sound_api,".//Sound//Effects//shoe1_commons.wav", 0, 2)},
-	  {"shoe2", new Sound(sound_api,".//Sound//Effects//shoe2_commons.wav", 0, 2)},
-	  {"shoe3", new Sound(sound_api,".//Sound//Effects//shoe3_commons.wav", 0, 2)},
-	  {"shoe4", new Sound(sound_api,".//Sound//Effects//shoe4_commons.wav", 0, 2)},
-	  {"shoe5", new Sound(sound_api,".//Sound//Effects//shoe5_commons.wav", 0, 2)},
-	  {"shoe6", new Sound(sound_api,".//Sound//Effects//shoe6_commons.wav", 0, 2)},
-	  {"shoe7", new Sound(sound_api,".//Sound//Effects//shoe7_commons.wav", 0, 2)},
-	  {"shoe8", new Sound(sound_api,".//Sound//Effects//shoe8_commons.wav", 0, 2)} 
+	  {"shoe1", new Sound(pSoundDevice,".//Sound//Effects//shoe1_commons.wav", 0, 2)},
+	  {"shoe2", new Sound(pSoundDevice,".//Sound//Effects//shoe2_commons.wav", 0, 2)},
+	  {"shoe3", new Sound(pSoundDevice,".//Sound//Effects//shoe3_commons.wav", 0, 2)},
+	  {"shoe4", new Sound(pSoundDevice,".//Sound//Effects//shoe4_commons.wav", 0, 2)},
+	  {"shoe5", new Sound(pSoundDevice,".//Sound//Effects//shoe5_commons.wav", 0, 2)},
+	  {"shoe6", new Sound(pSoundDevice,".//Sound//Effects//shoe6_commons.wav", 0, 2)},
+	  {"shoe7", new Sound(pSoundDevice,".//Sound//Effects//shoe7_commons.wav", 0, 2)},
+	  {"shoe8", new Sound(pSoundDevice,".//Sound//Effects//shoe8_commons.wav", 0, 2)} 
   });
   
   vector<MAPSTRUCT> allmaps = {
-	  MAPSTRUCT(0, "main_map", 120, 12, 38, 105,".//ASCII//main_map.txt",sound_api,".//Sound//BGM//LostOneSockYesterday.wav", main_map, globalBGMVolume),
-	  MAPSTRUCT(1, "jeb1", 40, 4, 18, 55,".//ASCII//jeb1.txt", sound_api, ".//Sound//BGM//SubscriptiontoSuicide.wav", jeb1, globalBGMVolume),
-	  MAPSTRUCT(2, "jeb2", 40, 4, 18, 55,".//ASCII//jeb2.txt", sound_api,".//Sound//BGM//VaudevilleDrinkingGame.wav", jeb2, globalBGMVolume),
-	  MAPSTRUCT(3, "jeb3", 40, 4, 18, 55,".//ASCII//jeb3.txt", sound_api,".//Sound//BGM//CaffeineCrash.wav", jeb3, globalBGMVolume),
-	  MAPSTRUCT(4, "commons", 40, 4, 45, 50,".//ASCII//commons.txt", sound_api,".//Sound//BGM//NewFrontierForgotthe.wav", commons, globalBGMVolume)
+	  MAPSTRUCT(0, "main_map", 120, 12, 38, 105,".//ASCII//main_map.txt",pSoundDevice,".//Sound//BGM//LostOneSockYesterday.wav", main_map, globalBGMVolume),
+	  MAPSTRUCT(1, "jeb1", 40, 4, 18, 55,".//ASCII//jeb1.txt", pSoundDevice, ".//Sound//BGM//SubscriptiontoSuicide.wav", jeb1, globalBGMVolume),
+	  MAPSTRUCT(2, "jeb2", 40, 4, 18, 55,".//ASCII//jeb2.txt", pSoundDevice,".//Sound//BGM//VaudevilleDrinkingGame.wav", jeb2, globalBGMVolume),
+	  MAPSTRUCT(3, "jeb3", 40, 4, 18, 55,".//ASCII//jeb3.txt", pSoundDevice,".//Sound//BGM//CaffeineCrash.wav", jeb3, globalBGMVolume),
+	  MAPSTRUCT(4, "commons", 40, 4, 45, 50,".//ASCII//commons.txt", pSoundDevice,".//Sound//BGM//NewFrontierForgotthe.wav", commons, globalBGMVolume)
   };
   /*
-  Sound* main_jeb1 = new Sound(sound_api, ".//Sound//Effects//main_jeb1.wav", 0);
-  Sound* common_main = new Sound(sound_api, ".//Sound//Effects//common_main.wav", 0);
-  Sound* jeb1_jeb2_bottom = new Sound(sound_api, ".//Sound//Effects//jeb1_jeb2_bottom.wav", 0);
-  Sound* jeb1_jeb2_left = new Sound(sound_api, ".//Sound//Effects//jeb1_jeb2_left.wav", 0);
-  Sound* jeb2_jeb3_bottom = new Sound(sound_api, ".//Sound//Effects//jeb2_jeb3_bottom.wav", 0);
-  Sound* jeb2_jeb3_left = new Sound(sound_api, ".//Sound//Effects//jeb2_jeb3_left.wav", 0);
+  Sound* main_jeb1 = new Sound(pSoundDevice, ".//Sound//Effects//main_jeb1.wav", 0);
+  Sound* common_main = new Sound(pSoundDevice, ".//Sound//Effects//common_main.wav", 0);
+  Sound* jeb1_jeb2_bottom = new Sound(pSoundDevice, ".//Sound//Effects//jeb1_jeb2_bottom.wav", 0);
+  Sound* jeb1_jeb2_left = new Sound(pSoundDevice, ".//Sound//Effects//jeb1_jeb2_left.wav", 0);
+  Sound* jeb2_jeb3_bottom = new Sound(pSoundDevice, ".//Sound//Effects//jeb2_jeb3_bottom.wav", 0);
+  Sound* jeb2_jeb3_left = new Sound(pSoundDevice, ".//Sound//Effects//jeb2_jeb3_left.wav", 0);
   */
   vector<pair<pair<string, door*>, pair<string, door*>>> doorpairs = {
-	  make_pair(make_pair("main_map", new door(3400,4100,280,2070,320,2160, sound_api, ".//Sound//Effects//main_jeb1.wav")), make_pair("jeb1", new door(320,1960,3580,3700,3780,4000, sound_api, ".//Sound//Effects//main_jeb1.wav"))),
-	  make_pair(make_pair("main_map",new door(1560,9960,1735,480,1800,650, sound_api, ".//Sound//Effects//common_main.wav")), make_pair("commons", new door(1680,520,1480,10033,1750,10200, sound_api, ".//Sound//Effects//common_main.wav"))),
-	  make_pair(make_pair("jeb1",new door(340,2000,280,2160,320,2200, sound_api, ".//Sound//Effects//jeb1_jeb2_bottom.wav")), make_pair("jeb2", new door(360,2040,360,2070,400,2160, sound_api, ".//Sound//Effects//jeb1_jeb2_bottom.wav"))),//jeb1 bottom to jeb2 bottom
-	  make_pair(make_pair("jeb1",new door(200,600,54,480,127,560, sound_api, ".//Sound//Effects//jeb1_jeb2_left.wav")), make_pair("jeb2", new door(200, 560,50,640,140,720, sound_api, ".//Sound//Effects//jeb1_jeb2_left.wav"))), //jeb1 left to jeb2 left
-	  make_pair(make_pair("jeb2",new door(360,2040,280,2000,320,2150, sound_api, ".//Sound//Effects//jeb2_jeb3_bottom.wav")), make_pair("jeb3", new door(340,2000,360,2160,400,2200, sound_api, ".//Sound//Effects//jeb2_jeb3_bottom.wav"))),//jeb2 bottom to jeb3 bottom
-	  make_pair(make_pair("jeb2",new door(200,560,80,480,140,555, sound_api, ".//Sound//Effects//jeb2_jeb3_left.wav")), make_pair("jeb3", new door(200,600,54,625,127,700, sound_api, ".//Sound//Effects//jeb2_jeb3_left.wav")))//jeb2 left to jeb3 left
+	  make_pair(make_pair("main_map", new door(3400,4100,280,2070,320,2160, pSoundDevice, ".//Sound//Effects//main_jeb1.wav")), make_pair("jeb1", new door(320,1960,3580,3700,3780,4000, pSoundDevice, ".//Sound//Effects//main_jeb1.wav"))),
+	  make_pair(make_pair("main_map",new door(1560,9960,1735,480,1800,650, pSoundDevice, ".//Sound//Effects//common_main.wav")), make_pair("commons", new door(1680,520,1480,10033,1750,10200, pSoundDevice, ".//Sound//Effects//common_main.wav"))),
+	  make_pair(make_pair("jeb1",new door(340,2000,280,2160,320,2200, pSoundDevice, ".//Sound//Effects//jeb1_jeb2_bottom.wav")), make_pair("jeb2", new door(360,2040,360,2070,400,2160, pSoundDevice, ".//Sound//Effects//jeb1_jeb2_bottom.wav"))),//jeb1 bottom to jeb2 bottom
+	  make_pair(make_pair("jeb1",new door(200,600,54,480,127,560, pSoundDevice, ".//Sound//Effects//jeb1_jeb2_left.wav")), make_pair("jeb2", new door(200, 560,50,640,140,720, pSoundDevice, ".//Sound//Effects//jeb1_jeb2_left.wav"))), //jeb1 left to jeb2 left
+	  make_pair(make_pair("jeb2",new door(360,2040,280,2000,320,2150, pSoundDevice, ".//Sound//Effects//jeb2_jeb3_bottom.wav")), make_pair("jeb3", new door(340,2000,360,2160,400,2200, pSoundDevice, ".//Sound//Effects//jeb2_jeb3_bottom.wav"))),//jeb2 bottom to jeb3 bottom
+	  make_pair(make_pair("jeb2",new door(200,560,80,480,140,555, pSoundDevice, ".//Sound//Effects//jeb2_jeb3_left.wav")), make_pair("jeb3", new door(200,600,54,625,127,700, pSoundDevice, ".//Sound//Effects//jeb2_jeb3_left.wav")))//jeb2 left to jeb3 left
 	  /*
 	  make_pair(make_pair("main_map", new door(3600,3600,280,2070,320,2160, main_jeb1)), make_pair("jeb1", new door(320,1960,3580,3700,3780,4000, main_jeb1))),
 	  make_pair(make_pair("main_map",new door(1560,9960,1735,480,1800,650, common_main)), make_pair("commons", new door(1680,520,1480,10033,1750,10200, common_main))),
@@ -1182,10 +1182,10 @@ void Core::initialGame() {
   sprites.push_back(mob8);
   sprites.push_back(mob9);
 
-  pIntro = new Sound(sound_api, ".//Sound//BGM//RoadtripWithNo.wav", 0);
-  pNextPage = new Sound(sound_api, ".//Sound//Effects//nextpage.wav", 0);
-  pButtonClose = new Sound(sound_api, ".//Sound//Effects//buttonclose.wav", 0);
-  pButtonOpen = new Sound(sound_api, ".//Sound//Effects//scrollpaper.wav", 0);
+  pIntro = new Sound(pSoundDevice, ".//Sound//BGM//RoadtripWithNo.wav", 0);
+  pNextPage = new Sound(pSoundDevice, ".//Sound//Effects//nextpage.wav", 0);
+  pButtonClose = new Sound(pSoundDevice, ".//Sound//Effects//buttonclose.wav", 0);
+  pButtonOpen = new Sound(pSoundDevice, ".//Sound//Effects//scrollpaper.wav", 0);
   pExplore = static_cast<Player*>(sprites[0])->getWalkEngine();
   targetX=103;
   targetY=49;
@@ -1206,6 +1206,7 @@ void Core::initialGame() {
 	 delete noticequeue;
 	 delete teampop;
 	 delete mouseripple;
+	 delete pSoundDevice;
 
 	 for (auto sprite : sprites) {
 		 delete sprite;

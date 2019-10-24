@@ -17,7 +17,7 @@
 
 class NoticeQueue {
 public:
-	NoticeQueue(int sound_api) { p = new Sound(sound_api, ".//Sound//Effects//notice.wav", 0); noticeTimer.Reset(); bShowing = false; }
+	NoticeQueue(SoundDevice* pSoundDevice) { p = new Sound(pSoundDevice, ".//Sound//Effects//notice.wav", 0); noticeTimer.Reset(); bShowing = false; }
 	~NoticeQueue() { delete p; }
 	double getElapsedTime() {return noticeTimer.ElapsedTime();}
 	void resetTimer() { noticeTimer.Reset(); }

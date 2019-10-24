@@ -26,7 +26,92 @@
 using namespace DirectX;
 #endif
 
+SoundDevice::SoundDevice(int sound_api) : sound_api(sound_api) {
+	if (sound_api == 1) {
+		pXaudio2 = new Xaudio2();
+	} else if (sound_api == 2) {
+		pOpenAL = new OpenAL();
+	}
+}
+SoundDevice::~SoundDevice() {
+	if (sound_api == 1) {
+		SAFE_DELETE(pXaudio2);
+	} else if (sound_api == 2) {
+		SAFE_DELETE(pOpenAL);
+	}
+}
 
+Xaudio2::Xaudio2() {
+	CoInitializeEx(nullptr, 0);
+
+	if (FAILED(hr = XAudio2Create(&pXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR))) {
+		MessageBox(nullptr, "Creating XAudio2 Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+#if (_WIN32_WINNT >= 0x0602 /*_WIN32_WINNT_WIN8*/)
+	if (FAILED(hr = pXAudio2->CreateMasteringVoice(&pMasterVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr))) {
+		MessageBox(nullptr, "Creating MasteringVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+	XAUDIO2_VOICE_DETAILS MasterVoiceDetails;
+
+	pMasterVoice->GetVoiceDetails(&MasterVoiceDetails);
+	if (MasterVoiceDetails.InputChannels > 8) {
+		MessageBox(nullptr, "Input Channel more than 8!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+
+#else
+	if (FAILED(hr = pXAudio2->CreateMasteringVoice(&pMasterVoice)/*, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, 0, nullptr)*/)) {
+		char buffer[256];
+		sprintf_s(buffer, "Creating MasteringVoice Failed! %x, %d", hr, hr);
+		MessageBox(nullptr, buffer, "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+	XAUDIO2_DEVICE_DETAILS DeviceDetails;
+	if (FAILED(hr = pXAudio2->GetDeviceDetails(0, &DeviceDetails))) {
+		MessageBox(nullptr, "Getting Channel Mask Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+#endif
+	IUnknown* pXAPO;
+	if (FAILED(hr = XAudio2CreateReverb(&pXAPO))) {
+		MessageBox(nullptr, "Create Reverb Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+		return;
+	}
+	XAUDIO2_EFFECT_DESCRIPTOR descriptor;
+	descriptor.InitialState = true;
+	descriptor.OutputChannels = 1;
+	descriptor.pEffect = pXAPO;
+	XAUDIO2_EFFECT_CHAIN chain;
+	chain.EffectCount = 1;
+	chain.pEffectDescriptors = &descriptor;
+#if (_WIN32_WINNT >= 0x0602 /*_WIN32_WINNT_WIN8*/)
+	if (FAILED(hr = pXAudio2->CreateSubmixVoice(&pSubmixVoice, 1, MasterVoiceDetails.InputSampleRate, 0, 0, nullptr, &chain))) {
+		MessageBox(nullptr, "Creating SubmixVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+#else
+	if (FAILED(hr = pXAudio2->CreateSubmixVoice(&pSubmixVoice, 1, DeviceDetails.OutputFormat.Format.nSamplesPerSec, 0, 0, nullptr, &chain))) {
+		MessageBox(nullptr, "Creating SubmixVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+#endif
+	pXAPO->Release();
+
+	XAUDIO2FX_REVERB_PARAMETERS reverbParameters;
+	ReverbConvertI3DL2ToNative(&I3DL2_Reverb[2], &reverbParameters);
+	pSubmixVoice->SetEffectParameters(0, &reverbParameters, sizeof(reverbParameters));
+}
+
+
+void Xaudio2::SetEffectParameters(int I3DL2) {
+	XAUDIO2FX_REVERB_PARAMETERS reverbParameters;
+	ReverbConvertI3DL2ToNative(&I3DL2_Reverb[(I3DL2 % 30 + 30) % 30], &reverbParameters);//(I3DL2 % 30 + 30) % 30 positive modulo
+	pSubmixVoice->SetEffectParameters(0, &reverbParameters, sizeof(reverbParameters));
+}
+
+
+
+Xaudio2::~Xaudio2() {
+	pMasterVoice->DestroyVoice();
+	pSubmixVoice->DestroyVoice();
+	pXAudio2->Release();
+	CoUninitialize();
+}
 bool Sound::LoadFile(std::string szFile, char* &wfx) {
 	if(szFile.empty())
 		return false;
@@ -132,13 +217,14 @@ bool Sound::LoadFile(std::string szFile, char* &wfx) {
 }
 
 
-Sound::Sound(int sound_api, std::string filename){
+Sound::Sound(SoundDevice* pDevice, std::string filename) {
 	LoadFile(filename, wfx);
-	if (sound_api == 1) {
-		common_init();
+	if (pDevice->GetSoundAPI() == 1) {
+
+		pXAudio2 = pDevice->GetXaudio2Ptr()->GetIXAudio2Ptr();
+
 		buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
 		buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
-
 
 		if (FAILED(hr = pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<const WAVEFORMATEX*>(wfx), 0, XAUDIO2_DEFAULT_FREQ_RATIO, nullptr, nullptr, nullptr))) {
 			MessageBox(nullptr, "Creating SourceVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
@@ -148,17 +234,20 @@ Sound::Sound(int sound_api, std::string filename){
 			MessageBox(nullptr, "Submiting SourceBuffer Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
 			return;
 		}
-	} else if (sound_api == 2) {
+	} else if (pDevice->GetSoundAPI() == 2) {
 		;
 	}
 
 }
 
-Sound::Sound(int sound_api, std::string filename, int loop) {
+Sound::Sound(SoundDevice* pDevice, std::string filename, int loop) {
 	LoadFile(filename, wfx);
 
-	if (sound_api == 1){
-		common_init();
+	if (pDevice->GetSoundAPI() == 1){
+
+
+		pXAudio2 = pDevice->GetXaudio2Ptr()->GetIXAudio2Ptr();
+
 		buffer.LoopCount = loop;
 		buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
 
@@ -171,22 +260,18 @@ Sound::Sound(int sound_api, std::string filename, int loop) {
 			MessageBox(nullptr, "Submiting SourceBuffer Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
 			return;
 		}
-	} else if (sound_api == 2) {
+	} else if (pDevice->GetSoundAPI() == 2) {
 		;
 	}
 
 }
 
-Sound::Sound(int sound_api, std::string filename, int loop, int I3DL2=2) {
-	if (sound_api == 1) {
-		common_init();
+Sound::Sound(SoundDevice* pDevice, std::string filename, int loop, int I3DL2) {
+	if (pDevice->GetSoundAPI() == 1) {
 
-
-
-		XAUDIO2FX_REVERB_PARAMETERS reverbParameters;
-		ReverbConvertI3DL2ToNative(&I3DL2_Reverb[I3DL2], &reverbParameters);
-		pSubmixVoice->SetEffectParameters(0, &reverbParameters, sizeof(reverbParameters));
-
+		pXAudio2 = pDevice->GetXaudio2Ptr()->GetIXAudio2Ptr();
+		pMasterVoice = pDevice->GetXaudio2Ptr()->GetMasterVoice();
+		pSubmixVoice = pDevice->GetXaudio2Ptr()->GetSubmixVoicePtr();
 
 		initial3DSoundCone();
 		initial3D_LFE_Curve();
@@ -296,7 +381,9 @@ Sound::Sound(int sound_api, std::string filename, int loop, int I3DL2=2) {
 			MessageBox(nullptr, "Submiting SourceBuffer Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
 			return;
 		}
-	} else if (sound_api == 2) {
+		pDevice->GetXaudio2Ptr()->SetEffectParameters(I3DL2);
+		
+	} else if (pDevice->GetSoundAPI() == 2) {
 		;
 	}
 
@@ -309,7 +396,6 @@ Sound::~Sound() {
 		pSourceVoice->DestroyVoice();//must destroy voice or it will crash when quit
 	}
 
-
 	if (wfx) {
 		delete []wfx;
 		wfx = nullptr;
@@ -319,76 +405,12 @@ Sound::~Sound() {
 		buffer.pAudioData = nullptr;
 	}
 	X3Dcleanup();
-	if (pMasterVoice) {
-		pMasterVoice->DestroyVoice();
-	}
-	if (pSubmixVoice) {
-		pSubmixVoice->DestroyVoice();
-	}
-	pXAudio2->Release();
-	CoUninitialize();
+
 }
 
 
-void Sound::common_init() {
-
-	CoInitializeEx(nullptr, 0);
-
-	if (FAILED(hr = XAudio2Create(&pXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR))) {
-		MessageBox(nullptr, "Creating XAudio2 Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-	}
-#if (_WIN32_WINNT >= 0x0602 /*_WIN32_WINNT_WIN8*/)
-	if (FAILED(hr = pXAudio2->CreateMasteringVoice(&pMasterVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr))) {
-		MessageBox(nullptr, "Creating MasteringVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-	}
-	XAUDIO2_VOICE_DETAILS MasterVoiceDetails;
-
-	pMasterVoice->GetVoiceDetails(&MasterVoiceDetails);
-	if (MasterVoiceDetails.InputChannels > 8) {
-		MessageBox(nullptr, "Input Channel more than 8!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-	}
-
-#else
-	if (FAILED(hr = pXAudio2->CreateMasteringVoice(&pMasterVoice)/*, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, 0, nullptr)*/)) {
-		char buffer[256];
-		sprintf_s(buffer, "Creating MasteringVoice Failed! %x, %d", hr, hr);
-		MessageBox(nullptr, buffer, "Wrong", MB_ICONEXCLAMATION | MB_OK);
-	}
-	XAUDIO2_DEVICE_DETAILS DeviceDetails;
-	if (FAILED(hr = pXAudio2->GetDeviceDetails(0, &DeviceDetails))) {
-		MessageBox(nullptr, "Getting Channel Mask Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-	}
-#endif
-	IUnknown* pXAPO;
-	if (FAILED(hr = XAudio2CreateReverb(&pXAPO))) {
-		MessageBox(nullptr, "Create Reverb Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-		return;
-	}
-	XAUDIO2_EFFECT_DESCRIPTOR descriptor;
-	descriptor.InitialState = true;
-	descriptor.OutputChannels = 1;
-	descriptor.pEffect = pXAPO;
-	XAUDIO2_EFFECT_CHAIN chain;
-	chain.EffectCount = 1;
-	chain.pEffectDescriptors = &descriptor;
-#if (_WIN32_WINNT >= 0x0602 /*_WIN32_WINNT_WIN8*/)
-	if (FAILED(hr = pXAudio2->CreateSubmixVoice(&pSubmixVoice, 1, MasterVoiceDetails.InputSampleRate, 0, 0, nullptr, &chain))) {
-		MessageBox(nullptr, "Creating SubmixVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-	}
-#else
-	if (FAILED(hr = pXAudio2->CreateSubmixVoice(&pSubmixVoice, 1, DeviceDetails.OutputFormat.Format.nSamplesPerSec, 0, 0, nullptr, &chain))) {
-		MessageBox(nullptr, "Creating SubmixVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
-	}
-#endif
-	pXAPO->Release();
-}
 
 
-void Sound::SetEffectParameters(int I3DL2) {
-	XAUDIO2FX_REVERB_PARAMETERS reverbParameters;
-	ReverbConvertI3DL2ToNative(&I3DL2_Reverb[(I3DL2 % 30 + 30) % 30], &reverbParameters);//(I3DL2 % 30 + 30) % 30 positive modulo
-	pSubmixVoice->SetEffectParameters(0, &reverbParameters, sizeof(reverbParameters));
-}
 void Sound::X3DPositionalSoundCalculation(float listenerX, float lisenerY, float listenerZ, float emitterX, float emitterY, float emitterZ, float elaspedtime) {
 
 	XMVECTOR v1 = XMVectorSet( listenerX, lisenerY, listenerZ, 0.0f);//new listener positions

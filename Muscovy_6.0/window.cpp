@@ -698,7 +698,7 @@ LRESULT Core::OnMouseWheel(WPARAM wParam, LPARAM lParam) {
 			} else {
 				--I3DL2;
 			}
-			sprites[0]->getCurrentMap()->getBGM()->SetEffectParameters(I3DL2);
+			pSoundDevice->GetXaudio2Ptr()->SetEffectParameters(I3DL2);
 			return 0;
 	}
 	BGMVolDispTimer.Reset();
