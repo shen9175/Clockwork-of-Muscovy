@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C4AEDD8E-81F7-40A3-9475-A9EF9417936B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Muscovy_60</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files\sdk\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\sdk\Lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="astar.cpp" />
+    <ClCompile Include="Battle.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="character.cpp" />
+    <ClCompile Include="core.cpp" />
+    <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Explore.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Move.cpp" />
+    <ClCompile Include="pqastar.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="timer.cpp" />
+    <ClCompile Include="WalkEngine.cpp" />
+    <ClCompile Include="window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="astar.h" />
+    <ClInclude Include="Battle.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="character.h" />
+    <ClInclude Include="core.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="Graphics.h" />
+    <ClInclude Include="Explore.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Move.h" />
+    <ClInclude Include="pqastar.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="timer.h" />
+    <ClInclude Include="WalkEngine.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Muscovy.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="bitmap1.bmp" />
+    <Image Include="Character Sprites\Blue.png" />
+    <Image Include="Character Sprites\game.ico" />
+    <Image Include="Character Sprites\gamesmall.ico" />
+    <Image Include="Character Sprites\Goggles\Goggles_IdleBack.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_IdleDown.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_IdleLeft.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_IdleRight.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_WalkBack1.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_WalkBack2.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_WalkBack3.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_WalkDown1.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_WalkDown2.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_WalkDown3.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_WalkLeft1.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_WalkLeft2.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_WalkLeft3.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_WalkRight1.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_WalkRight2.png" />
+    <Image Include="Character Sprites\Goggles\Goggles_WalkRight3.png" />
+    <Image Include="Character Sprites\Imp\Imp_AttackBack1.png" />
+    <Image Include="Character Sprites\Imp\Imp_AttackBack2.png" />
+    <Image Include="Character Sprites\Imp\Imp_AttackDown1.png" />
+    <Image Include="Character Sprites\Imp\Imp_AttackDown2.png" />
+    <Image Include="Character Sprites\Imp\Imp_AttackLeft1.png" />
+    <Image Include="Character Sprites\Imp\Imp_AttackLeft2.png" />
+    <Image Include="Character Sprites\Imp\Imp_AttackRight1.png" />
+    <Image Include="Character Sprites\Imp\Imp_AttackRight2.png" />
+    <Image Include="Character Sprites\Imp\Imp_DeadBack.png" />
+    <Image Include="Character Sprites\Imp\Imp_DeadDown.png" />
+    <Image Include="Character Sprites\Imp\Imp_DeadLeft.png" />
+    <Image Include="Character Sprites\Imp\Imp_DeadRight.png" />
+    <Image Include="Character Sprites\Imp\Imp_DieBack1.png" />
+    <Image Include="Character Sprites\Imp\Imp_DieBack2.png" />
+    <Image Include="Character Sprites\Imp\Imp_DieDown1.png" />
+    <Image Include="Character Sprites\Imp\Imp_DieDown2.png" />
+    <Image Include="Character Sprites\Imp\Imp_DieLeft1.png" />
+    <Image Include="Character Sprites\Imp\Imp_DieLeft2.png" />
+    <Image Include="Character Sprites\Imp\Imp_DieRight1.png" />
+    <Image Include="Character Sprites\Imp\Imp_DieRight2.png" />
+    <Image Include="Character Sprites\Imp\Imp_HitBack1.png" />
+    <Image Include="Character Sprites\Imp\Imp_HitBack2.png" />
+    <Image Include="Character Sprites\Imp\Imp_HitDown1.png" />
+    <Image Include="Character Sprites\Imp\Imp_HitDown2.png" />
+    <Image Include="Character Sprites\Imp\Imp_HitLeft1.png" />
+    <Image Include="Character Sprites\Imp\Imp_HitLeft2.png" />
+    <Image Include="Character Sprites\Imp\Imp_HitRight1.png" />
+    <Image Include="Character Sprites\Imp\Imp_HitRight2.png" />
+    <Image Include="Character Sprites\Imp\Imp_IdleBack.png" />
+    <Image Include="Character Sprites\Imp\Imp_IdleDown.png" />
+    <Image Include="Character Sprites\Imp\Imp_IdleLeft.png" />
+    <Image Include="Character Sprites\Imp\Imp_IdleRight.png" />
+    <Image Include="Character Sprites\Imp\Imp_WalkBack1.png" />
+    <Image Include="Character Sprites\Imp\Imp_WalkBack2.png" />
+    <Image Include="Character Sprites\Imp\Imp_WalkDown1.png" />
+    <Image Include="Character Sprites\Imp\Imp_WalkDown2.png" />
+    <Image Include="Character Sprites\Imp\Imp_WalkLeft1.png" />
+    <Image Include="Character Sprites\Imp\Imp_WalkLeft2.png" />
+    <Image Include="Character Sprites\Imp\Imp_WalkRight1.png" />
+    <Image Include="Character Sprites\Imp\Imp_WalkRight2.png" />
+    <Image Include="Character Sprites\Jint\Jint_IdleBack.png" />
+    <Image Include="Character Sprites\Jint\Jint_IdleDown.png" />
+    <Image Include="Character Sprites\Jint\Jint_IdleLeft.png" />
+    <Image Include="Character Sprites\Jint\Jint_IdleRight.png" />
+    <Image Include="Character Sprites\Jint\Jint_WalkBack1.png" />
+    <Image Include="Character Sprites\Jint\Jint_WalkBack2.png" />
+    <Image Include="Character Sprites\Jint\Jint_WalkBack3.png" />
+    <Image Include="Character Sprites\Jint\Jint_WalkDown1.png" />
+    <Image Include="Character Sprites\Jint\Jint_WalkDown2.png" />
+    <Image Include="Character Sprites\Jint\Jint_WalkDown3.png" />
+    <Image Include="Character Sprites\Jint\Jint_WalkLeft1.png" />
+    <Image Include="Character Sprites\Jint\Jint_WalkLeft2.png" />
+    <Image Include="Character Sprites\Jint\Jint_WalkLeft3.png" />
+    <Image Include="Character Sprites\Jint\Jint_WalkRight1.png" />
+    <Image Include="Character Sprites\Jint\Jint_WalkRight2.png" />
+    <Image Include="Character Sprites\Jint\Jint_WalkRight3.png" />
+    <Image Include="Character Sprites\Officer\Officer_IdleBack.png" />
+    <Image Include="Character Sprites\Officer\Officer_IdleDown.png" />
+    <Image Include="Character Sprites\Officer\Officer_IdleLeft.png" />
+    <Image Include="Character Sprites\Officer\Officer_IdleRight.png" />
+    <Image Include="Character Sprites\Officer\Officer_WalkBack1.png" />
+    <Image Include="Character Sprites\Officer\Officer_WalkBack2.png" />
+    <Image Include="Character Sprites\Officer\Officer_WalkBack3.png" />
+    <Image Include="Character Sprites\Officer\Officer_WalkDown1.png" />
+    <Image Include="Character Sprites\Officer\Officer_WalkDown2.png" />
+    <Image Include="Character Sprites\Officer\Officer_WalkDown3.png" />
+    <Image Include="Character Sprites\Officer\Officer_WalkLeft1.png" />
+    <Image Include="Character Sprites\Officer\Officer_WalkLeft2.png" />
+    <Image Include="Character Sprites\Officer\Officer_WalkLeft3.png" />
+    <Image Include="Character Sprites\Officer\Officer_WalkRight1.png" />
+    <Image Include="Character Sprites\Officer\Officer_WalkRight2.png" />
+    <Image Include="Character Sprites\Officer\Officer_WalkRight3.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_ActivateBack.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_ActivateDown.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_ActivateLeft.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_ActivateRight.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DeadBack.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DeadDown.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DeadLeft.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DeadRight.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieBack1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieBack2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieDown1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieDown2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieLeft1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieLeft2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieRight1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieRight2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeBack1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeBack2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeDown1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeDown2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeLeft1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeLeft2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeRight1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeRight2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitBack1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitBack2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitDown1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitDown2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitLeft1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitLeft2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitRight1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitRight2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_IdleBack.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_IdleDown.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_IdleLeft.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_IdleRight.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_MagicBack.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_MagicDown.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_MagicLeft.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_MagicRight.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolBack1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolBack2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolBack3.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolDown1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolDown2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolDown3.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolLeft1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolLeft2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolLeft3.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolRight1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolRight2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolRight3.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordBack1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordBack2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordDown1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordDown2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordLeft1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordLeft2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordRight1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordRight2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkBack1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkBack2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkBack3.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkDown1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkDown2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkDown3.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkLeft1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkLeft2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkLeft3.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkRight1.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkRight2.png" />
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkRight3.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_ActivateBack.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_ActivateDown.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_ActivateLeft.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_ActivateRight.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_DeadBack.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_DeadDown.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_DeadLeft.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_DeadRight.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieBack1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieBack2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieDown1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieDown2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieLeft1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieLeft2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieRight1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieRight2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeBack1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeBack2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeDown1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeDown2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeLeft1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeLeft2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeRight1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeRight2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitBack1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitBack2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitDown1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitDown2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitLeft1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitLeft2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitRight.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitRight2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_IdleBack.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_IdleDown.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_IdleLeft.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_IdleRight.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_MagicBack.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_MagicDown.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_MagicLeft.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_MagicRight.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolBack1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolBack2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolBack3.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolDown1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolDown2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolDown3.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolLeft1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolLeft2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolLeft3.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolRight1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolRight2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolRight3.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordBack1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordBack2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordDown1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordDown2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordLeft1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordLeft2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordRight1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordRight2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkBack1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkBack2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkBack3.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkDown1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkDown2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkDown3.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkLeft1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkLeft2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkLeft3.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkRight1.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkRight2.png" />
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkRight3.png" />
+    <Image Include="Character Sprites\V2FemaleColored.png" />
+    <Image Include="Journal\j0.png" />
+    <Image Include="Journal\j1.png" />
+    <Image Include="Journal\j2.png" />
+    <Image Include="Journal\j3.png" />
+    <Image Include="Journal\j4.png" />
+    <Image Include="Journal\j5.png" />
+    <Image Include="Journal\j6.png" />
+    <Image Include="Maps\location.png" />
+    <Image Include="Maps\target.png" />
+    <Image Include="Mouse\ripple1.png" />
+    <Image Include="Mouse\ripple2.png" />
+    <Image Include="Mouse\ripple3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Character Sprites\Cursor.cur" />
+    <None Include="Mouse\Cursor.cur" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

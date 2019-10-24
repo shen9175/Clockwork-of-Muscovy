@@ -1,0 +1,879 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="astar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="character.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pqastar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Explore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Move.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WalkEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="astar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Battle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="character.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pqastar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Explore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Move.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WalkEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Muscovy.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Character Sprites\Goggles\Goggles_WalkBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_WalkBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_WalkBack3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_WalkDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_WalkDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_WalkDown3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_WalkLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_WalkLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_WalkLeft3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_WalkRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_WalkRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_WalkRight3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_ActivateBack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_ActivateDown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_ActivateLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_ActivateRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DeadBack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DeadDown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DeadLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DeadRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_DieRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_GrenadeRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_HitRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_IdleBack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_IdleDown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_IdleLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_IdleRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_MagicBack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_MagicDown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_MagicLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_MagicRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolBack3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolDown3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolLeft3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_PistolRight3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_SwordRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkBack3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkDown3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkLeft3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Female\PlayerFemale_WalkRight3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_AttackBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_AttackBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_AttackDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_AttackDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_AttackLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_AttackLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_AttackRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_AttackRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_DeadBack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_DeadDown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_DeadLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_DeadRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_DieBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_DieBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_DieDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_DieDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_DieLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_DieLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_DieRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_DieRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_HitBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_HitBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_HitDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_HitDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_HitLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_HitLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_HitRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_HitRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_IdleBack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_IdleDown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_IdleLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_IdleRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_WalkBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_WalkBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_WalkDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_WalkDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_WalkLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_WalkLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_WalkRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Imp\Imp_WalkRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_IdleBack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_IdleDown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_IdleLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Goggles\Goggles_IdleRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_IdleBack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_IdleDown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_IdleLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_IdleRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_IdleBack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_IdleDown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_IdleLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_IdleRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Journal\j0.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Journal\j1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Journal\j2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Journal\j3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Journal\j4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Journal\j5.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Journal\j6.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Maps\location.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Maps\target.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_WalkBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_WalkBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_WalkBack3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_WalkDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_WalkDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_WalkDown3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_WalkLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_WalkLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_WalkLeft3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_WalkRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_WalkRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Officer\Officer_WalkRight3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_WalkBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_WalkBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_WalkBack3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_WalkDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_WalkDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_WalkDown3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_WalkLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_WalkLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_WalkLeft3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_WalkRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_WalkRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Jint\Jint_WalkRight3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Blue.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_ActivateBack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_ActivateDown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_ActivateLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_ActivateRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_DeadBack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_DeadDown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_DeadLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_DeadRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_DieRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_GrenadeRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_HitRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_IdleBack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_IdleDown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_IdleLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_IdleRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_MagicBack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_MagicDown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_MagicLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_MagicRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolBack3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolDown3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolLeft3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_PistolRight3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_SwordRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkBack1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkBack2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkBack3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkDown1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkDown2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkDown3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkLeft1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkLeft2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkLeft3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkRight1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkRight2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\Player Male\PlayerMale_WalkRight3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\V2FemaleColored.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\game.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Character Sprites\gamesmall.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Mouse\ripple1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Mouse\ripple2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Mouse\ripple3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Character Sprites\Cursor.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Mouse\Cursor.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>
