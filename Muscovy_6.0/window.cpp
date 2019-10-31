@@ -4,6 +4,22 @@
 #include <xaudio2.h>
 #include <xaudio2fx.h>
 #include <x3daudio.h>
+#if defined(_MSC_VER)
+#include <al.h>
+#include <alc.h>
+#include <efx.h>
+#include <alut.h>
+#elif defined(__APPLE__)
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#include <OpenAL/efx.h>
+#include <OpenAL/alut.h>
+#else
+#include <AL/al.h>
+#include <AL/alc.h>
+#include <AL/efx.h>
+#include <AL/alut.h>
+#endif
 #include <queue>
 #include <ctime>
 #include <memory>
@@ -698,7 +714,12 @@ LRESULT Core::OnMouseWheel(WPARAM wParam, LPARAM lParam) {
 			} else {
 				--I3DL2;
 			}
-			pSoundDevice->GetXaudio2Ptr()->SetEffectParameters(I3DL2);
+			if (pSoundDevice->GetSoundAPI() == 1) {
+				reinterpret_cast<Xaudio2*>(pSoundDevice->GetDevicePtr())->SetEffectParameters(I3DL2);
+			} else if (pSoundDevice->GetSoundAPI() == 2) {
+				//reinterpret_cast<OpenAL*>(pSoundDevice->GetDevicePtr())->SetEffectParameters(I3DL2);
+			}
+			
 			return 0;
 	}
 	BGMVolDispTimer.Reset();

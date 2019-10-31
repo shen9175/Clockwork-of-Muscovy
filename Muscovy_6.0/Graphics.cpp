@@ -5,6 +5,23 @@
 #include <xaudio2.h>
 #include <xaudio2fx.h>
 #include <x3daudio.h>
+#if defined(_MSC_VER)
+#include <al.h>
+#include <alc.h>
+#include <efx.h>
+#include <alut.h>
+#elif defined(__APPLE__)
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#include <OpenAL/efx.h>
+#include <OpenAL/alut.h>
+#else
+#include <AL/al.h>
+#include <AL/alc.h>
+#include <AL/efx.h>
+#include <AL/alut.h>
+#endif
+
 #include <queue>
 #include <ctime>
 #include <memory>
@@ -385,7 +402,7 @@ void Graphic::DrawScreen(HWND hWnd, Character* p)
 					char buffer[256];
 					SetTextColor(hdcMem, RGB(204, 50, 50));
 					SetRect(&textRect, 0, 580, 400, 600);
-					sprintf_s(buffer, "%s: %s", "Footstep Reverb Effect", pCore->pSoundDevice->GetXaudio2Ptr()->GetI3DL2_Name((pCore->I3DL2 % 30 + 30) % 30));
+					sprintf_s(buffer, "%s: %s", "Footstep Reverb Effect", reinterpret_cast<Xaudio2*>(pCore->pSoundDevice->GetDevicePtr())->GetI3DL2_Name((pCore->I3DL2 % 30 + 30) % 30));
 					DrawText(hdcMem, buffer, -1, &textRect, DT_LEFT | DT_VCENTER);
 					SetTextColor(hdcMem, RGB(0, 0, 0));
 				}

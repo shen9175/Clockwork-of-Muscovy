@@ -13,147 +13,53 @@
 #define SAFE_RELEASE(p)      { if (p) { (p)->Release(); (p) = nullptr; } }
 #endif
 
+typedef ALboolean(*EAXSetBufferMode)(ALsizei, ALuint*, ALint);
+
+typedef ALenum(*EAXGetBufferMode)(ALuint, ALint*);
+
 
 class Xaudio2 {
 public:
-	Xaudio2();
+	Xaudio2(IXAudio2* p);
 	~Xaudio2();
-	const char* GetI3DL2_Name(int index) { return I3DL2_Name[index]; }
-	IXAudio2* GetIXAudio2Ptr() { return pXAudio2; }
-	IXAudio2SubmixVoice* GetSubmixVoicePtr() { return pSubmixVoice; }
-	IXAudio2MasteringVoice* GetMasterVoice() { return pMasterVoice; }
-	void SetEffectParameters(int I3DL2);
-private:
-	IXAudio2* pXAudio2;
-	IXAudio2SubmixVoice* pSubmixVoice;
-	IXAudio2MasteringVoice* pMasterVoice;
-	HRESULT hr;
-	XAUDIO2FX_REVERB_I3DL2_PARAMETERS I3DL2_Reverb[30] =
-	{
-		XAUDIO2FX_I3DL2_PRESET_DEFAULT,
-		XAUDIO2FX_I3DL2_PRESET_GENERIC,
-		XAUDIO2FX_I3DL2_PRESET_FOREST,
-		XAUDIO2FX_I3DL2_PRESET_PADDEDCELL,
-		XAUDIO2FX_I3DL2_PRESET_ROOM,
-		XAUDIO2FX_I3DL2_PRESET_BATHROOM,
-		XAUDIO2FX_I3DL2_PRESET_LIVINGROOM,
-		XAUDIO2FX_I3DL2_PRESET_STONEROOM,
-		XAUDIO2FX_I3DL2_PRESET_AUDITORIUM,
-		XAUDIO2FX_I3DL2_PRESET_CONCERTHALL,
-		XAUDIO2FX_I3DL2_PRESET_CAVE,
-		XAUDIO2FX_I3DL2_PRESET_ARENA,
-		XAUDIO2FX_I3DL2_PRESET_HANGAR,
-		XAUDIO2FX_I3DL2_PRESET_CARPETEDHALLWAY,
-		XAUDIO2FX_I3DL2_PRESET_HALLWAY,
-		XAUDIO2FX_I3DL2_PRESET_STONECORRIDOR,
-		XAUDIO2FX_I3DL2_PRESET_ALLEY,
-		XAUDIO2FX_I3DL2_PRESET_CITY,
-		XAUDIO2FX_I3DL2_PRESET_MOUNTAINS,
-		XAUDIO2FX_I3DL2_PRESET_QUARRY,
-		XAUDIO2FX_I3DL2_PRESET_PLAIN,
-		XAUDIO2FX_I3DL2_PRESET_PARKINGLOT,
-		XAUDIO2FX_I3DL2_PRESET_SEWERPIPE,
-		XAUDIO2FX_I3DL2_PRESET_UNDERWATER,
-		XAUDIO2FX_I3DL2_PRESET_SMALLROOM,
-		XAUDIO2FX_I3DL2_PRESET_MEDIUMROOM,
-		XAUDIO2FX_I3DL2_PRESET_LARGEROOM,
-		XAUDIO2FX_I3DL2_PRESET_MEDIUMHALL,
-		XAUDIO2FX_I3DL2_PRESET_LARGEHALL,
-		XAUDIO2FX_I3DL2_PRESET_PLATE,
-	};
-
-	const char* I3DL2_Name[30] =
-	{
-		"Default",
-		"Generic",
-		"Forest",
-		"Padded cell",
-		"Room",
-		"Bathroom",
-		"Living room",
-		"Stone room",
-		"Auditorium",
-		"Concert hall",
-		"Cave",
-		"Arena",
-		"Hangar",
-		"Carpeted hallway",
-		"Hallway",
-		"Stone Corridor",
-		"Alley",
-		"City",
-		"Mountains",
-		"Quarry",
-		"Plain",
-		"Parking lot",
-		"Sewer pipe",
-		"Underwater",
-		"Small room",
-		"Medium room",
-		"Large room",
-		"Medium hall",
-		"Large hall",
-		"Plate",
-	};
-
-};
-class OpenAL {
-public:
-	OpenAL() {};
-	~OpenAL() {};
-private:
-};
-class SoundDevice {
-public:
-	SoundDevice(int sound_api);
-	~SoundDevice();
-	int GetSoundAPI() { return sound_api; }
-	Xaudio2* GetXaudio2Ptr() { return pXaudio2; }
-	OpenAL* GetOpenALPtr() { return pOpenAL; }
-private:
-	int sound_api;
-	Xaudio2* pXaudio2;
-	OpenAL* pOpenAL;
-
-};
-class Sound {
-public:
-	Sound(SoundDevice* pDevice, std::string filename);//infinite looping background flat music without any effect
-	Sound(SoundDevice* pDevice, std::string filename, int loop);//no looping or specify looping times flat wave file play (door sound)
-	Sound(SoundDevice* pDevice, std::string filename, int loop, int I3DL2);//for 3D positional sound with LPF Direct path and LPF Reverb Path
-	~Sound();
+	void CreateSource(std::string filename);
+	void CreateSource(std::string filename, int loop);
+	void Create3DPositionalSource(std::string filename, int loop, IXAudio2MasteringVoice* pMasterVoice);
 	void Play();
 	void LoopPlay();
 	void Stop();
 	void setVolume(float volume) { pSourceVoice->SetVolume(volume); }
 	float getVolume() { float v; pSourceVoice->GetVolume(&v); return v; }
-	void initialListenerEmitter(float listenerX, float lisenerY, float listenerZ, float emitterX, float emitterY, float emitterZ) { lisener->Position = { listenerX, lisenerY, listenerZ }; emitter->Position = {emitterX, emitterY, emitterZ}; }
+	void initialListenerEmitter(float listenerX, float lisenerY, float listenerZ, float emitterX, float emitterY, float emitterZ) { lisener->Position = { listenerX, lisenerY, listenerZ }; emitter->Position = { emitterX, emitterY, emitterZ }; }
 	void X3DPositionalSoundCalculation(float listenerX, float lisenerY, float listenerZ, float emitterX, float emitterY, float emitterZ, float elaspedtime);
+
+	const char* GetI3DL2_Name(int index) { return I3DL2_Name[index]; }
+	//IXAudio2* GetIXAudio2Ptr() { return pXAudio2; }
+	//IXAudio2SubmixVoice* GetSubmixVoicePtr() { return pSubmixVoice; }
 	
+	void SetEffectParameters(int I3DL2);
 private:
-
-
+	//pointers that received from others, don't need release in destructor
 	IXAudio2* pXAudio2;
-	IXAudio2SourceVoice* pSourceVoice;
-	IXAudio2SubmixVoice* pSubmixVoice;
 	IXAudio2MasteringVoice* pMasterVoice;
+
+	//pointers that created in this class, need release in destructor
+	IXAudio2SubmixVoice* pSubmixVoice;
+	IXAudio2SourceVoice* pSourceVoice;
+	
 	char* wfx = nullptr;
 	XAUDIO2_BUFFER buffer = { 0 };
 	HRESULT hr;
-#if (_WIN32_WINNT >= 0x0602 /*_WIN32_WINNT_WIN8*/)
-	XAUDIO2_VOICE_DETAILS MasterVoiceDetails;
-#else
-	XAUDIO2_DEVICE_DETAILS DeviceDetails;
-#endif
+
 	X3DAUDIO_HANDLE X3DInstance;
 	X3DAUDIO_LISTENER* lisener;
 	X3DAUDIO_EMITTER* emitter;
 	X3DAUDIO_CONE* Listener_DirectionalCone;
 	X3DAUDIO_CONE* emitterCone;
 	X3DAUDIO_DISTANCE_CURVE_POINT* Emitter_LFE_CurvePoints;
-	X3DAUDIO_DISTANCE_CURVE*       Emitter_LFE_Curve;
+	X3DAUDIO_DISTANCE_CURVE* Emitter_LFE_Curve;
 	X3DAUDIO_DISTANCE_CURVE_POINT* Emitter_Reverb_CurvePoints;
-	X3DAUDIO_DISTANCE_CURVE*       Emitter_Reverb_Curve;
+	X3DAUDIO_DISTANCE_CURVE* Emitter_Reverb_Curve;
 	X3DAUDIO_DSP_SETTINGS* dsp_setting;
 
 	float* matrixCoefficients;
@@ -164,9 +70,72 @@ private:
 	void initial3D_LFE_Curve();
 	void initial3D_Reverb_Curve();
 	void X3Dcleanup();
+	static XAUDIO2FX_REVERB_I3DL2_PARAMETERS I3DL2_Reverb[30];
+	static const char* I3DL2_Name[30];
+};
+class OpenAL {
+public:
+	OpenAL();
+	~OpenAL();
+	void CreateSource(std::string filename);
+	void CreateSource(std::string filename, int loop);
+	void Create3DPositionalSource(std::string filename, int loop, void* p);
+	void Play();
+	void LoopPlay();
+	void Stop();
+	void setVolume(float volume);
+	float getVolume();
+	void initialListenerEmitter(float listenerX, float lisenerY, float listenerZ, float emitterX, float emitterY, float emitterZ);
+	void X3DPositionalSoundCalculation(float listenerX, float lisenerY, float listenerZ, float emitterX, float emitterY, float emitterZ, float elaspedtime);
+private:
+
+	ALuint buffers[1];
+	ALuint sources[1];
+	ALvoid DisplayALError(std::string text, ALint errorcode);
+	ALvoid DisplayALUTError(std::string text, ALint errorcode);
+};
+class SoundDevice {
+public:
+	SoundDevice(int sound_api);
+	~SoundDevice();
+	int GetSoundAPI() { return sound_api; }
+	void* GetDevicePtr() { return pAudio; }
+	IXAudio2MasteringVoice* GetMasterVoice() { return pMasterVoice; }
+private:
+	void* pAudio;
+	int sound_api;
+
+	IXAudio2MasteringVoice* pMasterVoice;
+	HRESULT hr;
+	ALCcontext* pContext;
+	ALint attribs[4];
+	ALCint iSends;
+
+
 };
 
+//Sound class now is just a wrapper that keep old interface that wraps both xaudio2 and openal Source(Emitter)Voice class
+class Sound {
+public:
+	Sound(SoundDevice* pDevice, std::string filename);//infinite looping background flat music without any effect
+	Sound(SoundDevice* pDevice, std::string filename, int loop);//no looping or specify looping times flat wave file play (door sound)
+	Sound(SoundDevice* pDevice, std::string filename, int loop, int dummy);//for 3D positional sound with LPF Direct path and LPF Reverb Path
+	~Sound();
+	void Play();
+	void LoopPlay();
+	void Stop();
 
+	void setVolume(float volume);
+	float getVolume();
+	void initialListenerEmitter(float listenerX, float lisenerY, float listenerZ, float emitterX, float emitterY, float emitterZ);
+	void PositionalSoundCalculation(float listenerX, float lisenerY, float listenerZ, float emitterX, float emitterY, float emitterZ, float elaspedtime);
+	
+private:
+	void* pAudio;
+	void* pSource;
+	int sound_api;
+
+};
 
 
 class VoiceCallback : public IXAudio2VoiceCallback

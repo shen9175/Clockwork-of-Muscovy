@@ -3,6 +3,22 @@
 #include <xaudio2.h>
 #include <xaudio2fx.h>
 #include <x3daudio.h>
+#if defined(_MSC_VER)
+#include <al.h>
+#include <alc.h>
+#include <efx.h>
+#include <alut.h>
+#elif defined(__APPLE__)
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#include <OpenAL/efx.h>
+#include <OpenAL/alut.h>
+#else
+#include <AL/al.h>
+#include <AL/alc.h>
+#include <AL/efx.h>
+#include <AL/alut.h>
+#endif
 #include <fstream>
 #include <string>
 #include <cmath>

@@ -4,6 +4,22 @@
 #include <xaudio2.h>
 #include <xaudio2fx.h>
 #include <x3daudio.h>
+#if defined(_MSC_VER)
+#include <al.h>
+#include <alc.h>
+#include <efx.h>
+#include <alut.h>
+#elif defined(__APPLE__)
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#include <OpenAL/efx.h>
+#include <OpenAL/alut.h>
+#else
+#include <AL/al.h>
+#include <AL/alc.h>
+#include <AL/efx.h>
+#include <AL/alut.h>
+#endif
 #include <queue>
 #include <vector>
 #include <ctime>
@@ -134,7 +150,7 @@ void WalkEngine::Update() {
 	double elaspedtime = footstepSoundTimer.ElapsedTime();
 	if (elaspedtime > 0.3 && (RowPiece != 0 || ColPiece != 0)) {
 		footstepSoundTimer.Reset();
-		currentSound->X3DPositionalSoundCalculation(
+		currentSound->PositionalSoundCalculation(
 			EngineUser->getpCore()->sprites[0]->getCamera()->getLeft() + (EngineUser->getpCore()->sprites[0]->getCamera()->getRight() - EngineUser->getpCore()->sprites[0]->getCamera()->getLeft()) / 2.0f,
 			EngineUser->getpCore()->sprites[0]->getCamera()->getTop() + (EngineUser->getpCore()->sprites[0]->getCamera()->getBottom() - EngineUser->getpCore()->sprites[0]->getCamera()->getTop()) / 2.0f,
 			200.0f, 
