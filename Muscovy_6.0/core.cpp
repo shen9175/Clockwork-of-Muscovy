@@ -751,7 +751,8 @@ void Core::initialGame() {
 	mode=0;//starting animation: background introduction
 	dialogue_initial(); 
 	antiAround = { false, 0 };
-	sound_api = XAUDIO2_API;
+	//sound_api = XAUDIO2_API;
+	sound_api = OPENAL_API;
 	pSoundDevice = new SoundDevice(sound_api);
 	noticequeue = new NoticeQueue(pSoundDevice);
 	teampop = new TeamPop(pSoundDevice, singlestate);

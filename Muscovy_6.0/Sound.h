@@ -87,7 +87,17 @@ public:
 	float getVolume();
 	void initialListenerEmitter(float listenerX, float lisenerY, float listenerZ, float emitterX, float emitterY, float emitterZ);
 	void X3DPositionalSoundCalculation(float listenerX, float lisenerY, float listenerZ, float emitterX, float emitterY, float emitterZ, float elaspedtime);
+	bool LoadFile(std::string szFile, ALvoid*& data, ALenum& format, ALsizei& size, ALfloat& freq);
 private:
+	typedef struct  {
+		DirectX::XMFLOAT3 Velocity;
+		DirectX::XMFLOAT3 Position;
+		DirectX::XMFLOAT3 At;
+		DirectX::XMFLOAT3 Up;
+	} OpenALObject;
+
+	OpenALObject* listener;
+	OpenALObject* emitter;
 
 	ALuint buffers[1];
 	ALuint sources[1];

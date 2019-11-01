@@ -68,7 +68,7 @@ SoundDevice::SoundDevice(int sound_api) : sound_api(sound_api) {
 		MessageBox(nullptr, buffer, "Wrong", MB_ICONEXCLAMATION | MB_OK);
 	}
 #endif
-	pAudio = pXAudio2;
+		pAudio = pXAudio2;
 
 	} else if (sound_api == 2) {
 		ALCdevice* pDevice = nullptr;
@@ -108,6 +108,9 @@ SoundDevice::~SoundDevice() {
 }
 OpenAL::OpenAL() {
 	alutInit(nullptr, nullptr);
+	alGetError(); // clear error code 
+	listener = new OpenALObject;
+	emitter = new OpenALObject;
 }
 
 
@@ -124,12 +127,21 @@ ALvoid OpenAL::DisplayALUTError(std::string text, ALint errorcode) {
 
 
 OpenAL::~OpenAL() {
+	if (listener) {
+		delete listener;
+		listener = nullptr;
+	}
+	if (emitter) {
+		delete emitter;
+		emitter = nullptr;
+	}
 	alDeleteSources(1, sources);
 	alDeleteBuffers(1, buffers);
 	alutExit();
 
 }
 void OpenAL::CreateSource(std::string filename) {
+	
 	if (alIsExtensionPresent("EAX-RAM") == AL_TRUE) {
 		EAXSetBufferMode g_eaxSetMode;
 
@@ -138,7 +150,7 @@ void OpenAL::CreateSource(std::string filename) {
 		if (g_eaxSetMode) {
 			g_eaxSetMode(1, buffers, alGetEnumValue("AL_STORAGE_HARDWARE"));
 		}
-
+	}
 
 		alGenBuffers(1, buffers);
 		ALenum error;
@@ -152,24 +164,24 @@ void OpenAL::CreateSource(std::string filename) {
 		} else {
 			DisplayALError("alGenBuffers :", error);
 		}
+		alGetError(); // clear error code 
 
-		data = alutLoadMemoryFromFile(filename.c_str(), &format, &size, &freq);
-		if ((error = alutGetError()) != ALUT_ERROR_NO_ERROR) {
+
+		if (!LoadFile(filename, data, format, size, freq)) {
+			// Copy test.wav data into AL Buffer 0 
 			alBufferData(buffers[0], format, data, size, static_cast<ALsizei>(freq));
 			if ((error = alGetError()) != AL_NO_ERROR) {
 				DisplayALError("alBufferData buffer 0 : ", error);
 			}
 		} else {
-			DisplayALUTError("alutLoadWAVFile "+filename+" : ", error);
+			std::string display = "Load " + filename + " error!";
+			MessageBox(nullptr, display.c_str(), "Wrong", MB_ICONEXCLAMATION | MB_OK);
 			alDeleteBuffers(1, buffers);
 		}
-		// Copy test.wav data into AL Buffer 0 
-		alBufferData(buffers[0], format, data, size, static_cast<ALsizei>(freq));
-		if ((error = alGetError()) != AL_NO_ERROR) {
-			DisplayALError("alBufferData buffer 0 : ", error);
-			alDeleteBuffers(1, buffers);
-		}
-		free(data);
+
+
+
+		delete[]data;
 		data = nullptr;
 		
 		alGenSources(1, sources);
@@ -183,10 +195,11 @@ void OpenAL::CreateSource(std::string filename) {
 			DisplayALError("alSourcei AL_BUFFER 0 : ", error);
 		}
 
-	}
+	
 }
 
 void OpenAL::CreateSource(std::string filename, int loop) {
+	
 	if (alIsExtensionPresent("EAX-RAM") == AL_TRUE) {
 		EAXSetBufferMode g_eaxSetMode;
 
@@ -196,7 +209,7 @@ void OpenAL::CreateSource(std::string filename, int loop) {
 			g_eaxSetMode(1, buffers, alGetEnumValue("AL_STORAGE_HARDWARE"));
 		}
 
-
+	}
 		alGenBuffers(1, buffers);
 		ALenum error;
 		ALenum format;
@@ -209,24 +222,23 @@ void OpenAL::CreateSource(std::string filename, int loop) {
 		} else {
 			DisplayALError("alGenBuffers :", error);
 		}
+		alGetError(); // clear error code 
 
-		data = alutLoadMemoryFromFile(filename.c_str(), &format, &size, &freq);
-		if ((error = alutGetError()) != ALUT_ERROR_NO_ERROR) {
+		if (!LoadFile(filename, data, format, size, freq)) {
+			// Copy test.wav data into AL Buffer 0 
 			alBufferData(buffers[0], format, data, size, static_cast<ALsizei>(freq));
 			if ((error = alGetError()) != AL_NO_ERROR) {
 				DisplayALError("alBufferData buffer 0 : ", error);
 			}
 		} else {
-			DisplayALUTError("alutLoadWAVFile " + filename + " : ", error);
+			std::string display = "Load " + filename + " error!";
+			MessageBox(nullptr, display.c_str(), "Wrong", MB_ICONEXCLAMATION | MB_OK);
 			alDeleteBuffers(1, buffers);
 		}
-		// Copy test.wav data into AL Buffer 0 
-		alBufferData(buffers[0], format, data, size, static_cast<ALsizei>(freq));
-		if ((error = alGetError()) != AL_NO_ERROR) {
-			DisplayALError("alBufferData buffer 0 : ", error);
-			alDeleteBuffers(1, buffers);
-		}
-		free(data);
+
+
+
+		delete[]data;
 		data = nullptr;
 
 		alGenSources(1, sources);
@@ -244,9 +256,10 @@ void OpenAL::CreateSource(std::string filename, int loop) {
 		if ((error = alGetError()) != AL_NO_ERROR) {
 			DisplayALError("alSourcei AL_BUFFER 0 : ", error);
 		}
-	}
+	
 }
 void OpenAL::Create3DPositionalSource(std::string filename, int loop, void* p) {
+	
 	if (alIsExtensionPresent("EAX-RAM") == AL_TRUE) {
 		EAXSetBufferMode g_eaxSetMode;
 
@@ -255,7 +268,7 @@ void OpenAL::Create3DPositionalSource(std::string filename, int loop, void* p) {
 		if (g_eaxSetMode) {
 			g_eaxSetMode(1, buffers, alGetEnumValue("AL_STORAGE_HARDWARE"));
 		}
-
+	}
 
 		alGenBuffers(1, buffers);
 		ALenum error;
@@ -269,24 +282,23 @@ void OpenAL::Create3DPositionalSource(std::string filename, int loop, void* p) {
 		} else {
 			DisplayALError("alGenBuffers :", error);
 		}
+		alGetError(); // clear error code 
+		
 
-		data = alutLoadMemoryFromFile(filename.c_str(), &format, &size, &freq);
-		if ((error = alutGetError()) != ALUT_ERROR_NO_ERROR) {
+		if (!LoadFile(filename, data, format, size, freq)) {
+				// Copy test.wav data into AL Buffer 0 
 			alBufferData(buffers[0], format, data, size, static_cast<ALsizei>(freq));
 			if ((error = alGetError()) != AL_NO_ERROR) {
 				DisplayALError("alBufferData buffer 0 : ", error);
 			}
 		} else {
-			DisplayALUTError("alutLoadWAVFile " + filename + " : ", error);
+			std::string display = "Load " + filename + " error!";
+			MessageBox(nullptr, display.c_str(), "Wrong", MB_ICONEXCLAMATION | MB_OK);
 			alDeleteBuffers(1, buffers);
 		}
-		// Copy test.wav data into AL Buffer 0 
-		alBufferData(buffers[0], format, data, size, static_cast<ALsizei>(freq));
-		if ((error = alGetError()) != AL_NO_ERROR) {
-			DisplayALError("alBufferData buffer 0 : ", error);
-			alDeleteBuffers(1, buffers);
-		}
-		free(data);
+
+
+		delete []data;
 		data = nullptr;
 
 		alGenSources(1, sources);
@@ -304,17 +316,17 @@ void OpenAL::Create3DPositionalSource(std::string filename, int loop, void* p) {
 		if ((error = alGetError()) != AL_NO_ERROR) {
 			DisplayALError("alSourcei AL_BUFFER 0 : ", error);
 		}
-	}
+	
 }
 void OpenAL::Play() {
-	ALint playstate = 0;
+//	ALint playstate = 0;
 	alSourcePlay(sources[0]);
-	alGetSourcei(sources[0], AL_SOURCE_STATE, &playstate);
+//	alGetSourcei(sources[0], AL_SOURCE_STATE, &playstate);
 
-	while (playstate == AL_PLAYING) {
-		alutSleep(2);
-		alGetSourcei(sources[0], AL_SOURCE_STATE, &playstate);
-	}
+//	while (playstate == AL_PLAYING) {
+//		alutSleep(2);
+//		alGetSourcei(sources[0], AL_SOURCE_STATE, &playstate);
+//	}
 
 
 }
@@ -336,10 +348,172 @@ void OpenAL::initialListenerEmitter(float listenerX, float lisenerY, float liste
 	alSource3f(sources[0], AL_POSITION, emitterX, emitterY, emitterZ);
 }
 void OpenAL::X3DPositionalSoundCalculation(float listenerX, float lisenerY, float listenerZ, float emitterX, float emitterY, float emitterZ, float elaspedtime) {
+	XMVECTOR v1 = XMVectorSet(listenerX, lisenerY, listenerZ, 0.0f);//new listener positions
+	XMVECTOR v2 = XMVectorSet(listener->Position.x, listener->Position.y, listener->Position.z, 0);//old listener positions
+	XMVECTOR velocity = (v1 - v2) / elaspedtime;
+	XMFLOAT3 temp;
+	XMStoreFloat3(&temp, velocity);
+	listener->Position = { listenerX, lisenerY, listenerZ };//update new listener positions
+	listener->Velocity.x = temp.x;
+	listener->Velocity.y = temp.y;
+	listener->Velocity.z = temp.z;
 
+	v1 = XMVectorSet(emitterX, emitterY, emitterZ, 0.0f);//new emitter positions
+	v2 = XMVectorSet(emitter->Position.x, emitter->Position.y, emitter->Position.z, 0);//old emitter positions
+	velocity = (v1 - v2) / elaspedtime;
+	XMStoreFloat3(&temp, velocity);
+	emitter->Position = { emitterX, emitterY, emitterZ };//update new emitter positions
+	emitter->Velocity.x = temp.x;
+	emitter->Velocity.y = temp.y;
+	emitter->Velocity.z = temp.z;
+	alListener3f(AL_POSITION, listenerX, lisenerY, listenerZ);
+	alListener3f(AL_VELOCITY, listener->Velocity.x, listener->Velocity.y, listener->Velocity.z);
+	ALfloat listenerOri[] = { listener->At.x, listener->At.y, listener->At.z, listener->Up.x, listener->Up.y, listener->Up.z };
+	alListenerfv(AL_ORIENTATION, listenerOri);
+	alSource3f(sources[0], AL_POSITION, emitterX, emitterY, emitterZ);
+	alSource3f(sources[0], AL_VELOCITY, emitterX, emitterY, emitterZ);
+	ALfloat SourceOri[] = { emitter->At.x, emitter->At.y, emitter->At.z, emitter->Up.x, emitter->Up.y, emitter->Up.z };
+	alSourcefv(sources[0], AL_ORIENTATION, SourceOri);
 }
 
+bool OpenAL::LoadFile(std::string szFile, ALvoid*& data, ALenum& format, ALsizei& size, ALfloat& freq) {
+	if (szFile.empty())
+		return false;
 
+	std::ifstream inFile(szFile, std::ios::binary | std::ios::in);
+	if (inFile.fail())
+		return false;
+
+	DWORD dwChunkId = 0, dwFileSize = 0, dwChunkSize = 0, dwExtra = 0;
+
+	//look for 'RIFF' chunk identifier
+	inFile.seekg(0, std::ios::beg);
+	inFile.read(reinterpret_cast<char*>(&dwChunkId), sizeof(dwChunkId));
+	if (dwChunkId != 'FFIR') {
+		inFile.close();
+		return false;
+	}
+	inFile.seekg(4, std::ios::beg); //get file size
+	inFile.read(reinterpret_cast<char*>(&dwFileSize), sizeof(dwFileSize));
+	if (dwFileSize <= 16) {
+		inFile.close();
+		return false;
+	}
+	inFile.seekg(8, std::ios::beg); //get file format
+	inFile.read(reinterpret_cast<char*>(&dwExtra), sizeof(dwExtra));
+	if (dwExtra != 'EVAW') {
+		inFile.close();
+		return false;
+	}
+	char* wfx = nullptr;
+	//look for 'fmt ' chunk id
+	bool bFilledFormat = false;
+	for (unsigned int i = 12; i < dwFileSize; ) {
+		inFile.seekg(i, std::ios::beg);
+		inFile.read(reinterpret_cast<char*>(&dwChunkId), sizeof(dwChunkId));
+		inFile.seekg(i + 4, std::ios::beg);
+		inFile.read(reinterpret_cast<char*>(&dwChunkSize), sizeof(dwChunkSize));
+		if (dwChunkId == ' tmf') {
+			//wfx could be any type of wave, depend on the dwChunkSize: 16 bytes->PCMWAVEFORMAT or 18bytes->WAVEFORMATEX/PCMWAVEFORMAT
+			//or 40bytes-> WAVEFORMATEXTENSIBLE  or 50bytes->ADPCMWAVEFORMAT 
+			//we just put it in the bytes count memory area and don't need to know what ever it is.
+			// every xxWAVEFORAMxx first 16 bytes contains the same thing.
+			// Microsoft CreateSourceVoice need WAVEFORMEX*, just reintepret_cast to it. But if you only use WAVEFORAMEX or WAVEFORAMEXTENSIBLE to load this information,
+			// Some of wave files will fail either in CreateSourceVoice or SubmitSourceBuffer method
+			//only in this way could read and worked on 4-bit mono ADPCM wav file. Microsoft's 2 fancy sample loading codes file don't work at all at this kind of file.
+
+			wfx = new char[dwChunkSize];
+			inFile.seekg(i + 8, std::ios::beg);
+			inFile.read(wfx, dwChunkSize);
+			bFilledFormat = true;
+			break;
+		}
+		dwChunkSize += 8; //add offsets of the chunk id, and chunk size data entries
+		dwChunkSize += 1;
+		dwChunkSize &= 0xfffffffe; //guarantees WORD padding alignment
+		i += dwChunkSize;
+	}
+	if (!bFilledFormat) {
+		inFile.close();
+		return false;
+	}
+	
+
+	/*
+	struct FMTCHUNK {
+		short format;
+		short channels;
+		DWORD srate;
+		DWORD bps;
+		short balign;
+		short samp;
+	};
+
+	bitRate = fmt.samp;
+	freqRate = (float)fmt.srate;
+	channels = fmt.channels;
+	*/
+	typedef struct {
+		WORD        wFormatTag;         // format type
+		WORD        nChannels;          // number of channels (i.e. mono, stereo...)
+		DWORD       nSamplesPerSec;     // frequency
+		DWORD       nAvgBytesPerSec;    // for buffer estimation
+		WORD        nBlockAlign;        // block size of data
+		WORD        wBitsPerSample;     // number of bits per sample of mono data
+		WORD        cbSize;             // the count in bytes of the size of
+										// extra information (after cbSize)
+	} waveformat;
+	
+
+	if (reinterpret_cast<waveformat*>(wfx)->wBitsPerSample == 16) {
+		format = reinterpret_cast<waveformat*>(wfx)->nChannels == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
+	} else if (reinterpret_cast<waveformat*>(wfx)->wBitsPerSample == 8) {
+		format = reinterpret_cast<waveformat*>(wfx)->nChannels == 2 ? AL_FORMAT_STEREO8 : AL_FORMAT_MONO8;
+	} else {
+		format = AL_FORMAT_MONO8;
+	}
+
+	//format = static_cast<ALenum>(reinterpret_cast<waveformat*>(wfx)->wFormatTag);
+	freq = static_cast<ALfloat>(reinterpret_cast<waveformat*>(wfx)->nSamplesPerSec);
+	//format = static_cast<ALenum>(reinterpret_cast<FMTCHUNK*>(wfx)->format);
+	//freq = static_cast<ALfloat>(reinterpret_cast<FMTCHUNK*>(wfx)->srate);
+	//format = static_cast<ALenum>(wfx.format);
+	//freq = static_cast<ALfloat>(wfx.srate);
+
+	delete []wfx;
+	wfx = nullptr;
+	char* pDataBuffer;
+	//look for 'data' chunk id
+	bool bFilledData = false;
+	for (unsigned int i = 12; i < dwFileSize; ) {
+		inFile.seekg(i, std::ios::beg);
+		inFile.read(reinterpret_cast<char*>(&dwChunkId), sizeof(dwChunkId));
+		inFile.seekg(i + 4, std::ios::beg);
+		inFile.read(reinterpret_cast<char*>(&dwChunkSize), sizeof(dwChunkSize));
+		if (dwChunkId == 'atad') {
+			//WAVEFORMATEX* temp = reinterpret_cast<WAVEFORMATEX*>(wfx);//to calculate the lengtho of the time, need the nAvgBytesPerSec in WAVEFORMATEX
+			//length = dwChunkSize / static_cast<float>(temp->nAvgBytesPerSec);
+			
+			pDataBuffer = new char[dwChunkSize];
+			inFile.seekg(i + 8, std::ios::beg);
+			inFile.read(pDataBuffer, dwChunkSize);
+			size = dwChunkSize;
+			data = reinterpret_cast<ALvoid*>(pDataBuffer);
+			break;
+		}
+		dwChunkSize += 8; //add offsets of the chunk id, and chunk size data entries
+		dwChunkSize += 1;
+		dwChunkSize &= 0xfffffffe; //guarantees WORD padding alignment
+		i += dwChunkSize;
+	}
+	if (!bFilledData) {
+		inFile.close();
+		return false;
+	}
+
+	inFile.close();
+	return true;
+}
 
 Xaudio2::Xaudio2(IXAudio2* p) {
 	pXAudio2 = p;
@@ -548,7 +722,10 @@ void Xaudio2::CreateSource(std::string filename) {
 	LoadFile(filename, wfx);
 	buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
 	buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
-
+	//WAVEFORMATEX abc = *(reinterpret_cast<const WAVEFORMATEX*>(wfx));
+	//std::string sss;
+	//sss = abc.wFormatTag;
+	//MessageBox(nullptr, sss.c_str(), "Wrong", MB_ICONEXCLAMATION | MB_OK);
 	if (FAILED(hr = pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<const WAVEFORMATEX*>(wfx), 0, XAUDIO2_DEFAULT_FREQ_RATIO, nullptr, nullptr, nullptr))) {
 		MessageBox(nullptr, "Creating SourceVoice Failed!", "Wrong", MB_ICONEXCLAMATION | MB_OK);
 		return;
