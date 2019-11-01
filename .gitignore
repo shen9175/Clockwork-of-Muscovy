@@ -17,6 +17,55 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Visual C++ cache files
+
+ipch/
+
+*.aps
+
+*.ncb
+
+*.opendb
+
+*.opensdf
+
+*.sdf
+
+*.cachefile
+
+
+
+# game assets files
+
+Muscovy_6.0/ASCII
+
+Muscovy_6.0/Buttons
+
+Muscovy_6.0/Character Sprites
+
+Muscovy_6.0/Dialogue
+
+Muscovy_6.0/HUD
+
+Muscovy_6.0/Journal
+
+Muscovy_6.0/Maps
+
+Muscovy_6.0/Mouse
+
+Muscovy_6.0/portrait
+
+Muscovy_6.0/Sound
+
+Muscovy_6.0/x64
+
+
+
+# bin files
+
+x64
+
+x86
 # =========================
 # Operating System Files
 # =========================
@@ -41,3 +90,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+/.vs/slnx.sqlite
+/.vs/ProjectSettings.json
+/.vs/Clockwork-of-Muscovy/v16/Browse.VC.db
+/.vs/Clockwork-of-Muscovy/v16/.suo
