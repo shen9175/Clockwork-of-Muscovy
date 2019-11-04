@@ -98,12 +98,17 @@ private:
 
 	OpenALObject* listener;
 	OpenALObject* emitter;
-
+	ALenum error;
+	ALenum format;
+	ALsizei size = 0;
+	ALfloat freq = 0.0f;
+	ALvoid* data;
 	ALuint buffers[1];
 	ALuint sources[1];
 	ALvoid DisplayALError(std::string text, ALint errorcode);
 	ALvoid DisplayALUTError(std::string text, ALint errorcode);
 };
+
 class SoundDevice {
 public:
 	SoundDevice(int sound_api);

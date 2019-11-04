@@ -107,7 +107,6 @@ SoundDevice::~SoundDevice() {
 	}
 }
 OpenAL::OpenAL() {
-	alutInit(nullptr, nullptr);
 	alGetError(); // clear error code 
 	listener = new OpenALObject;
 	emitter = new OpenALObject;
@@ -127,6 +126,8 @@ ALvoid OpenAL::DisplayALUTError(std::string text, ALint errorcode) {
 
 
 OpenAL::~OpenAL() {
+	delete[]data;
+	data = nullptr;
 	if (listener) {
 		delete listener;
 		listener = nullptr;
@@ -137,129 +138,28 @@ OpenAL::~OpenAL() {
 	}
 	alDeleteSources(1, sources);
 	alDeleteBuffers(1, buffers);
-	alutExit();
-
 }
-void OpenAL::CreateSource(std::string filename) {
-	
-	if (alIsExtensionPresent("EAX-RAM") == AL_TRUE) {
-		EAXSetBufferMode g_eaxSetMode;
-
-		g_eaxSetMode = reinterpret_cast<EAXSetBufferMode>(alGetProcAddress("EAXSetBufferMode"));
-
-		if (g_eaxSetMode) {
-			g_eaxSetMode(1, buffers, alGetEnumValue("AL_STORAGE_HARDWARE"));
-		}
+void OpenAL::CreateSource(std::string filename) {	
+	if (LoadFile(filename, data, format, size, freq)) {
+		std::string display = "Load " + filename + " error!";
+		MessageBox(nullptr, display.c_str(), "Wrong", MB_ICONEXCLAMATION | MB_OK);
 	}
-
-		alGenBuffers(1, buffers);
-		ALenum error;
-		ALenum format;
-		ALvoid* data;
-		ALsizei size = 0;
-		//ALsizei freq = 0;
-		ALfloat freq = 0.0f;
-		if ((error = alGetError()) == AL_NO_ERROR) {
-
-		} else {
-			DisplayALError("alGenBuffers :", error);
-		}
-		alGetError(); // clear error code 
-
-
-		if (!LoadFile(filename, data, format, size, freq)) {
-			// Copy test.wav data into AL Buffer 0 
-			alBufferData(buffers[0], format, data, size, static_cast<ALsizei>(freq));
-			if ((error = alGetError()) != AL_NO_ERROR) {
-				DisplayALError("alBufferData buffer 0 : ", error);
-			}
-		} else {
-			std::string display = "Load " + filename + " error!";
-			MessageBox(nullptr, display.c_str(), "Wrong", MB_ICONEXCLAMATION | MB_OK);
-			alDeleteBuffers(1, buffers);
-		}
-
-
-
-		delete[]data;
-		data = nullptr;
-		
-		alGenSources(1, sources);
-		if ((error = alGetError()) != AL_NO_ERROR) {
-			DisplayALError("alGenSources 1 : ", error);
-		}
-
-		// Attach buffer 0 to source - 10 - 
-		alSourcei(sources[0], AL_BUFFER, buffers[0]);
-		if ((error = alGetError()) != AL_NO_ERROR) {
-			DisplayALError("alSourcei AL_BUFFER 0 : ", error);
-		}
-
-	
 }
 
-void OpenAL::CreateSource(std::string filename, int loop) {
-	
-	if (alIsExtensionPresent("EAX-RAM") == AL_TRUE) {
-		EAXSetBufferMode g_eaxSetMode;
-
-		g_eaxSetMode = reinterpret_cast<EAXSetBufferMode>(alGetProcAddress("EAXSetBufferMode"));
-
-		if (g_eaxSetMode) {
-			g_eaxSetMode(1, buffers, alGetEnumValue("AL_STORAGE_HARDWARE"));
-		}
-
+void OpenAL::CreateSource(std::string filename, int loop) {	
+	if (LoadFile(filename, data, format, size, freq)) {
+		std::string display = "Load " + filename + " error!";
+		MessageBox(nullptr, display.c_str(), "Wrong", MB_ICONEXCLAMATION | MB_OK);
 	}
-		alGenBuffers(1, buffers);
-		ALenum error;
-		ALenum format;
-		ALvoid* data;
-		ALsizei size = 0;
-		//ALsizei freq = 0;
-		ALfloat freq = 0.0f;
-		if ((error = alGetError()) == AL_NO_ERROR) {
-
-		} else {
-			DisplayALError("alGenBuffers :", error);
-		}
-		alGetError(); // clear error code 
-
-		if (!LoadFile(filename, data, format, size, freq)) {
-			// Copy test.wav data into AL Buffer 0 
-			alBufferData(buffers[0], format, data, size, static_cast<ALsizei>(freq));
-			if ((error = alGetError()) != AL_NO_ERROR) {
-				DisplayALError("alBufferData buffer 0 : ", error);
-			}
-		} else {
-			std::string display = "Load " + filename + " error!";
-			MessageBox(nullptr, display.c_str(), "Wrong", MB_ICONEXCLAMATION | MB_OK);
-			alDeleteBuffers(1, buffers);
-		}
-
-
-
-		delete[]data;
-		data = nullptr;
-
-		alGenSources(1, sources);
-		if ((error = alGetError()) != AL_NO_ERROR) {
-			DisplayALError("alGenSources 1 : ", error);
-		}
-
-		// Attach buffer 0 to source - 10 - 
-		alSourcei(sources[0], AL_BUFFER, buffers[0]);
-		if ((error = alGetError()) != AL_NO_ERROR) {
-			DisplayALError("alSourcei AL_BUFFER 0 : ", error);
-		}
-
-		alSourcei(sources[0], AL_LOOPING, AL_TRUE);
-		if ((error = alGetError()) != AL_NO_ERROR) {
-			DisplayALError("alSourcei AL_BUFFER 0 : ", error);
-		}
-	
 }
 void OpenAL::Create3DPositionalSource(std::string filename, int loop, void* p) {
-	
+	if (LoadFile(filename, data, format, size, freq)) {
+		std::string display = "Load " + filename + " error!";
+		MessageBox(nullptr, display.c_str(), "Wrong", MB_ICONEXCLAMATION | MB_OK);
+	}
+}
+void OpenAL::Play() {
+/*
 	if (alIsExtensionPresent("EAX-RAM") == AL_TRUE) {
 		EAXSetBufferMode g_eaxSetMode;
 
@@ -269,71 +169,79 @@ void OpenAL::Create3DPositionalSource(std::string filename, int loop, void* p) {
 			g_eaxSetMode(1, buffers, alGetEnumValue("AL_STORAGE_HARDWARE"));
 		}
 	}
-
-		alGenBuffers(1, buffers);
-		ALenum error;
-		ALenum format;
-		ALvoid* data;
-		ALsizei size = 0;
-		//ALsizei freq = 0;
-		ALfloat freq = 0.0f;
-		if ((error = alGetError()) == AL_NO_ERROR) {
-
-		} else {
-			DisplayALError("alGenBuffers :", error);
-		}
-		alGetError(); // clear error code 
-		
-
-		if (!LoadFile(filename, data, format, size, freq)) {
-				// Copy test.wav data into AL Buffer 0 
-			alBufferData(buffers[0], format, data, size, static_cast<ALsizei>(freq));
-			if ((error = alGetError()) != AL_NO_ERROR) {
-				DisplayALError("alBufferData buffer 0 : ", error);
-			}
-		} else {
-			std::string display = "Load " + filename + " error!";
-			MessageBox(nullptr, display.c_str(), "Wrong", MB_ICONEXCLAMATION | MB_OK);
-			alDeleteBuffers(1, buffers);
-		}
+	*/
+	alGetError(); // clear error code 
+	alGenBuffers(1, buffers);
 
 
-		delete []data;
-		data = nullptr;
+	if ((error = alGetError()) != AL_NO_ERROR) {
+		DisplayALError("alGenBuffers :", error);
+	}
 
-		alGenSources(1, sources);
-		if ((error = alGetError()) != AL_NO_ERROR) {
-			DisplayALError("alGenSources 1 : ", error);
-		}
 
-		// Attach buffer 0 to source - 10 - 
-		alSourcei(sources[0], AL_BUFFER, buffers[0]);
-		if ((error = alGetError()) != AL_NO_ERROR) {
-			DisplayALError("alSourcei AL_BUFFER 0 : ", error);
-		}
-
-		alSourcei(sources[0], AL_LOOPING, AL_TRUE);
-		if ((error = alGetError()) != AL_NO_ERROR) {
-			DisplayALError("alSourcei AL_BUFFER 0 : ", error);
-		}
-	
-}
-void OpenAL::Play() {
-//	ALint playstate = 0;
+	alGetError(); // clear error code 
+	// Copy test.wav data into AL Buffer 0 
+	alBufferData(buffers[0], format, data, size, static_cast<ALsizei>(freq));
+	if ((error = alGetError()) != AL_NO_ERROR) {
+		DisplayALError("alBufferData buffer 0 : ", error);
+	}
+	alGetError(); // clear error code 
+	alGenSources(1, sources);
+	if ((error = alGetError()) != AL_NO_ERROR) {
+		DisplayALError("alGenSources 1 : ", error);
+	}
+	alGetError(); // clear error code 
+	// Attach buffer 0 to source - 10 - 
+	alSourcei(sources[0], AL_BUFFER, buffers[0]);
+	if ((error = alGetError()) != AL_NO_ERROR) {
+		DisplayALError("alSourcei AL_BUFFER 0 : ", error);
+	}
 	alSourcePlay(sources[0]);
-//	alGetSourcei(sources[0], AL_SOURCE_STATE, &playstate);
-
-//	while (playstate == AL_PLAYING) {
-//		alutSleep(2);
-//		alGetSourcei(sources[0], AL_SOURCE_STATE, &playstate);
-//	}
-
-
 }
 void OpenAL::LoopPlay() {
+	/*
+	if (alIsExtensionPresent("EAX-RAM") == AL_TRUE) {
+		EAXSetBufferMode g_eaxSetMode;
+
+		g_eaxSetMode = reinterpret_cast<EAXSetBufferMode>(alGetProcAddress("EAXSetBufferMode"));
+
+		if (g_eaxSetMode) {
+			g_eaxSetMode(1, buffers, alGetEnumValue("AL_STORAGE_HARDWARE"));
+		}
+
+	}*/
+	alGenBuffers(1, buffers);
+	ALenum error;
+
+	if ((error = alGetError()) == AL_NO_ERROR) {
+
+	} else {
+		DisplayALError("alGenBuffers :", error);
+	}
+	alGetError(); // clear error code 
+	alGenSources(1, sources);
+	if ((error = alGetError()) != AL_NO_ERROR) {
+		DisplayALError("alGenSources 1 : ", error);
+	}
+
+	// Attach buffer 0 to source - 10 - 
+	alSourcei(sources[0], AL_BUFFER, buffers[0]);
+	if ((error = alGetError()) != AL_NO_ERROR) {
+		DisplayALError("alSourcei AL_BUFFER 0 : ", error);
+	}
+
+	alSourcei(sources[0], AL_LOOPING, AL_TRUE);
+	if ((error = alGetError()) != AL_NO_ERROR) {
+		DisplayALError("alSourcei AL_BUFFER 0 : ", error);
+	}
 	alSourcePlay(sources[0]);
 }
 void OpenAL::Stop() {
+	alSourcef(sources[0], AL_GAIN, 0.0f);
+	alSourceStop(sources[0]);
+	alSourcei(sources[0], AL_BUFFER, AL_NONE);
+	alDeleteSources(1, sources);
+	alDeleteBuffers(1, buffers);
 }
 void OpenAL::setVolume(float volume) {
 	alSourcef(sources[0], AL_GAIN, volume);

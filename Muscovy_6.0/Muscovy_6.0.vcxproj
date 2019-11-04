@@ -161,6 +161,7 @@
     <ClCompile Include="Explore.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Move.cpp" />
+    <ClCompile Include="OALSound.cpp" />
     <ClCompile Include="pqastar.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="timer.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="Explore.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Move.h" />
+    <ClInclude Include="OALSound.h" />
     <ClInclude Include="pqastar.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sound.h" />
